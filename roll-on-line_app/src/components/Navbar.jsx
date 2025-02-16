@@ -47,7 +47,7 @@ export default function ClippedDrawer() {
           "& .MuiDrawer-paper": {
             width: 150,
             boxSizing: "border-box",
-            border: "none",
+            border: "1px solid black",
             backgroundColor: "primary.main",
           },
         }}
@@ -117,7 +117,6 @@ export default function ClippedDrawer() {
           </List>
         </Toolbar>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}></Box>
     </Box>
   );
 }
