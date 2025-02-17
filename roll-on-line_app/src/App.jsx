@@ -1,17 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
-/* import { useState } from 'react'; */
+import { useState, useEffect } from 'react';
 
 import './App.css'
 
 import Navbar from './components/Navbar'
 import HomePage from './pages/HomePage';
 
-export default function App() {
+export const baseURL = import.meta.env.VITE_APP_API_URL;
 
+export default function App() {
   return (
     <main className="App">
       <Navbar />
-      <HomePage />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
     </main>
   );
 }

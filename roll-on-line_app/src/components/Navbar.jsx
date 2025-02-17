@@ -3,6 +3,7 @@ import {
   Drawer,
   AppBar,
   Toolbar,
+  Link,
   List,
   ListItem,
   ListItemButton,
@@ -11,8 +12,11 @@ import {
   Avatar,
   SvgIcon,
   Typography,
+  
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
+
+import { Link as RouterLink } from "react-router-dom";
 
 import RollOnLineIcon from "../assets/images/reshot-icon-roller-skate-2S9UAGYNPW.svg";
 
@@ -39,35 +43,44 @@ export default function ClippedDrawer() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer
+      <Drawer /* This is my sidebar */
         variant="permanent"
         anchor="right"
         sx={{
           display: { xs: "none", md: "flex" },
           "& .MuiDrawer-paper": {
-            width: 150,
+            width: 185,
             boxSizing: "border-box",
             border: "1px solid black",
             backgroundColor: "primary.main",
           },
         }}
       >
-        <Toolbar disableGutters>
-          <List sx={{ marginTop: 10 }}>
-            <ListItem sx={{ marginBottom: 4 }} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <HomeIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                </ListItemIcon>
+        <Toolbar disableGutters sx={{ width: 165 }}>
+          <List
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: 10,
+              width: 165,
+            }}
+          >
+            <ListItem sx={{ marginBottom: 4, width: 165 }}>
+              <ListItemButton sx={{ width: 165 }}>
+                <Link component={RouterLink} to="/">
+                  <ListItemIcon>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <HomeIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                  </ListItemIcon>
+                </Link>
                 Home
               </ListItemButton>
             </ListItem>
-            <ListItem sx={{ marginBottom: 4 }} disablePadding>
-              <ListItemButton>
+            <ListItem sx={{ marginBottom: 4, width: 165 }}>
+              <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>
                     <Avatar>
@@ -78,8 +91,8 @@ export default function ClippedDrawer() {
                 Events
               </ListItemButton>
             </ListItem>
-            <ListItem sx={{ marginBottom: 4 }} disablePadding>
-              <ListItemButton>
+            <ListItem sx={{ marginBottom: 4, width: 165 }}>
+              <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>
                     <Avatar>
@@ -90,8 +103,8 @@ export default function ClippedDrawer() {
                 History
               </ListItemButton>
             </ListItem>
-            <ListItem sx={{ marginBottom: 50 }} disablePadding>
-              <ListItemButton>
+            <ListItem sx={{ marginBottom: 16, width: 165 }}>
+              <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>
                     <Avatar>
@@ -102,8 +115,8 @@ export default function ClippedDrawer() {
                 About
               </ListItemButton>
             </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton>
+            <ListItem sx={{ width: 165 }}>
+              <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>
                     <Avatar>
