@@ -1,10 +1,20 @@
-import { Stack, Box, Grid2, SvgIcon } from "@mui/material";
+import {
+  Stack,
+  Box,
+  Grid2,
+  SvgIcon,
+  TableHead,
+  TableRow,
+  TableCell,
+  Table,
+  TableBody,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import { useEffect, useState } from "react";
 
-import {Swiper, SwiperSlide} from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, EffectCoverflow } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -191,9 +201,14 @@ export default function HomePage() {
           marginTop: "1vh",
           width: "50vw",
           height: "88vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
+        {/* Challenges carousel */}
         <Stack
+          arial-label="top-carusel"
           sx={{
             width: "50vw",
             height: "44vh",
@@ -208,69 +223,100 @@ export default function HomePage() {
             grabCursor={true}
             centeredSlides={true}
             loop={true}
-            slidesPerView={"auto"}
+            slidesPerView={3}
             coverflowEffect={{
               rotate: 0,
               stretch: 0,
               depth: 100,
-              modifier: 3,
+              modifier: 2.5,
             }}
-            style={{ width: "40vw", height: "44vh", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "5vh" }}
-            pagination={{element: ".swiper-pagination", clickable: true,}}
-            navigation={{nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev", clickable: true,}}
+            pagination={{ clickable: true }}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+              clickable: true,
+            }}
             modules={[EffectCoverflow, Pagination, Navigation]}
           >
-            {profile?.challenges?.map((challenge) => (
-              <SwiperSlide
-                key={challenge.id}
-                style={{ width: "12vw", height: "32vh", textAlign: "center", marginRight: "1vw", marginLeft: "1vw" }} 
-              >
-                <Box
-                borderRadius={5}
-                  sx={{ 
-                    textAlign: "center", 
-                    width: "15vw", 
-                    height: "30vh", 
-                    backgroundColor: "secondary.light", 
-                    paddingTop: "5vh" }}
-                >
-                  {challenge.name}
-                  <br />
-                  {challenge.goal_type}
-                  <br />
-                  {challenge.goal_value}
-                  <br />
-                  {challenge.start_date}
-                  <br />
-                  {challenge.end_date}
-                  <br />
-                  {challenge.status}
-                </Box>
-              </SwiperSlide>
-            ))}
+            {profile?.challenges?.map((challenge) => {
+              return (
+                <SwiperSlide key={challenge.id} className="swiper-slide">
+                  <Box
+                    className="carousel-box"
+                    borderRadius={5}
+                    sx={{
+                      textAlign: "center",
+                      width: "100%",
+                      height: "80%",
+                      backgroundColor: "secondary.light",
+                      paddingTop: "5vh",
+                    }}
+                  >
+                    {challenge.name}
+                    <br />
+                    {challenge.goal_type}
+                    <br />
+                    {challenge.goal_value}
+                    <br />
+                    {challenge.start_date}
+                    <br />
+                    {challenge.end_date}
+                    <br />
+                    {challenge.status}
+                  </Box>
+                </SwiperSlide>
+              );
+            })}
             <br />
-            <div className="swiper-controler">
+            <div className="slider-controler">
               <div className="swiper-button-prev slider-arrow">
                 <SvgIcon>
                   <ArrowBackIcon />
                 </SvgIcon>
               </div>
+              <div className="swiper-pagination"></div>
               <div className="swiper-button-next slider-arrow">
                 <SvgIcon>
                   <ArrowForwardIcon />
                 </SvgIcon>
               </div>
-              <div className="swiper-pagination"></div>
             </div>
           </Swiper>
         </Stack>
+
+        {/* Recent Activity Table */}
         <Box
           sx={{
             width: "50vw",
             height: "44vh",
             backgroundColor: "primary.light",
           }}
-        ></Box>
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell >Date</TableCell>
+              <TableCell>Place / Route</TableCell>
+              <TableCell>Duration</TableCell>
+              <TableCell>Distance</TableCell>
+              <TableCell>Calories</TableCell>
+              <TableCell>Comments</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {profile?.recent_activity?.map((activity) => {
+              return(
+              <TableRow key={activity.id}>
+                <TableCell>{activity.date}</TableCell>
+                <TableCell>{activity.route_name}</TableCell>
+                <TableCell>{activity.time}</TableCell>
+                <TableCell>{activity.distance}</TableCell>
+                <TableCell>{activity.calories_burned}</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+              )
+            })}
+          </TableBody>
+        </Box>
       </Stack>
     </Stack>
   );
