@@ -124,6 +124,24 @@ export default function HomePage() {
     handleCloseModal();
   };
 
+  //add new activity
+const handleAddActivity = () => {
+  const newActivity = { ...newActivityData };
+  setProfile((prevProfile) => ({
+    ...prevProfile,
+    recent_activity: [...prevProfile.recent_activity, newActivity],
+  }));
+  setNewActivityData({
+    date: "",
+    route_name: "",
+    time: "",
+    distance: "",
+    calories_burned: "",
+    comments: "",
+  });
+  handleCloseModal(); // Close the modal after adding the new activity
+};
+
   return (
     <Stack
       aria-label="home-page"
@@ -391,14 +409,15 @@ export default function HomePage() {
             paddingTop: "4vh",
           }}
         >
-
           {/* Add new activity */}
-          <Stack sx={{ width: "17%", alignSelf: "flex-end", marginRight: "2%" }}>
+          <Stack
+            sx={{ width: "17%", alignSelf: "flex-end", marginRight: "2%" }}
+          >
             <Button onClick={handleOpenModal} variant="contained">
               <SvgIcon>
-                <AddIcon fontSize="small"/>
+                <AddIcon fontSize="small" />
               </SvgIcon>
-               Add new
+              Add new
             </Button>
           </Stack>
 
@@ -434,10 +453,10 @@ export default function HomePage() {
                       {activity.route_name}
                     </TableCell>
                     <TableCell align="center" sx={{ maxWidth: "20px" }}>
-                      {activity.time}
+                      {activity.time} min
                     </TableCell>
                     <TableCell align="center" sx={{ maxWidth: "20px" }}>
-                      {activity.distance}
+                      {activity.distance} km
                     </TableCell>
                     <TableCell align="center" sx={{ maxWidth: "20px" }}>
                       {activity.calories_burned}
@@ -485,19 +504,66 @@ export default function HomePage() {
                 borderRadius: 8,
                 boxShadow: 24,
                 p: 4,
+                display: "flex",
+                flexDirection: "column",
+                marginBottom: 10,
               }}
             >
               <TextField
+              required  
                 name="date"
                 label="Date"
+                placeholder="YYYY-MM-DD"
                 value={newActivityData.date}
                 onChange={handleInputChange}
               />
-              {/* Add more TextField components for other activity fields */}
-              <Button onClick={handleCloseModal}>Cancel</Button>
-              <Button onClick={handleUpdateActivity}>
+
+              <TextField
+                required
+                name="route_name"
+                label="Route or Place name"
+                value={newActivityData.route_name}
+                onChange={handleInputChange}
+              />
+
+              <TextField
+                required
+                name="time"
+                label="Duration"
+                placeholder="minutes"
+                value={newActivityData.time}
+                onChange={handleInputChange}
+              />
+
+              <TextField
+                required
+                name="distance"
+                label="Distance"
+                placeholder="km"
+                value={newActivityData.distance}
+                onChange={handleInputChange}
+              />
+
+              <TextField
+                name="calories_burned"
+                label="Calories Burned"
+                value={newActivityData.calories_burned}
+                onChange={handleInputChange}
+              />
+
+              <TextField
+                multiline
+                rows={4}
+                name="comments"
+                label="Add additional comments"
+                value={newActivityData.comments}
+                onChange={handleInputChange}
+              />
+
+              <Button onClick={handleAddActivity}>
                 {editingActivity ? "Update Activity" : "Add Activity"}
               </Button>
+              <Button onClick={handleCloseModal}>Cancel</Button>
             </Box>
           </Modal>
         </Stack>
