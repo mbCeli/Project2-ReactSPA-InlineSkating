@@ -1,5 +1,15 @@
-import { Stack, Box, Grid2 } from "@mui/material";
+import { Stack, Box, Grid2, SvgIcon } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+
 import { useEffect, useState } from "react";
+
+import {Swiper, SwiperSlide} from "swiper/react";
+import { Navigation, Pagination, EffectCoverflow } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
 
 import axios from "axios";
 
@@ -35,6 +45,7 @@ export default function HomePage() {
       {/* Profile Dashboard */}
       <Box
         aria-label="left-side"
+        borderRadius={15}
         sx={{
           marginLeft: "1vw",
           marginRight: "2vw",
@@ -187,11 +198,71 @@ export default function HomePage() {
             width: "50vw",
             height: "44vh",
             backgroundColor: "primary.light",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <Box></Box>
-          <Box></Box>
-          <Box></Box>
+          <Swiper
+            className="swiper_container"
+            effect={"coverflow"}
+            grabCursor={true}
+            centeredSlides={true}
+            loop={true}
+            slidesPerView={"auto"}
+            coverflowEffect={{
+              rotate: 0,
+              stretch: 0,
+              depth: 100,
+              modifier: 3,
+            }}
+            style={{ width: "40vw", height: "44vh", display: "flex", justifyContent: "center", alignItems: "center", marginTop: "5vh" }}
+            pagination={{element: ".swiper-pagination", clickable: true,}}
+            navigation={{nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev", clickable: true,}}
+            modules={[EffectCoverflow, Pagination, Navigation]}
+          >
+            {profile?.challenges?.map((challenge) => (
+              <SwiperSlide
+                key={challenge.id}
+                style={{ width: "12vw", height: "32vh", textAlign: "center", marginRight: "1vw", marginLeft: "1vw" }} 
+              >
+                <Box
+                borderRadius={5}
+                  sx={{ 
+                    textAlign: "center", 
+                    width: "15vw", 
+                    height: "30vh", 
+                    backgroundColor: "secondary.light", 
+                    paddingTop: "5vh" }}
+                >
+                  {challenge.name}
+                  <br />
+                  {challenge.goal_type}
+                  <br />
+                  {challenge.goal_value}
+                  <br />
+                  {challenge.start_date}
+                  <br />
+                  {challenge.end_date}
+                  <br />
+                  {challenge.status}
+                </Box>
+              </SwiperSlide>
+            ))}
+            <br />
+            <div className="swiper-controler">
+              <div className="swiper-button-prev slider-arrow">
+                <SvgIcon>
+                  <ArrowBackIcon />
+                </SvgIcon>
+              </div>
+              <div className="swiper-button-next slider-arrow">
+                <SvgIcon>
+                  <ArrowForwardIcon />
+                </SvgIcon>
+              </div>
+              <div className="swiper-pagination"></div>
+            </div>
+          </Swiper>
         </Stack>
         <Box
           sx={{
