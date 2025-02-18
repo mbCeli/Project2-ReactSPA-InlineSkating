@@ -6,11 +6,20 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Table,
   TableBody,
+  TableContainer,
+  Table,
+  Typography,
+  TablePagination, //from material ui example
+  TableSortLabel, //from material ui example
+  Modal,
+  Button,
+  TextField,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 
 import { useEffect, useState } from "react";
 
@@ -27,18 +36,93 @@ import { baseURL } from "../App";
 
 export default function HomePage() {
   const [profile, setProfile] = useState({});
+  //to track pagination
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+  //to sort by
+  const [orderBy, setOrderBy] = useState("date");
+  const [order, setOrder] = useState("asc");
+  //to handle the modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingActivity, setEditingActivity] = useState(null);
+  //for adding new data
+  const [newActivityData, setNewActivityData] = useState({
+    date: "",
+    route_name: "",
+    time: "",
+    distance: "",
+    calories_burned: "",
+    comments: "",
+  });
 
+  //get profile info
   const getProfile = () => {
     axios
       .get(`${baseURL}/profile`)
       .then((response) => setProfile(response.data))
       .catch((error) => console.log(error));
   };
-  //console.log(profile);
 
   useEffect(() => {
     getProfile();
   }, []);
+
+  // sort function for activities by date
+  const handleSort = (property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  // calculate sorted and paginated activities based on their state
+  const sortedActivities = profile?.recent_activity?.sort((a, b) =>
+    order === "asc"
+      ? new Date(a.date) - new Date(b.date)
+      : new Date(b.date) - new Date(a.date)
+  );
+  const paginatedActivities = sortedActivities
+    ? sortedActivities.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
+    : [];
+
+  if (!profile || !profile.recent_activity) {
+    return <Typography>Error: Unable to fetch recent activities.</Typography>;
+  }
+
+  //handle opening and closing modal
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleEditActivity = (activity) => {
+    setEditingActivity(activity);
+    setNewActivityData({ ...activity });
+    handleOpenModal();
+  };
+
+  const handleInputChange = (e) => {
+    setNewActivityData({
+      ...newActivityData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleUpdateActivity = () => {
+    // Logic to add or update activities based on newActivityData
+    // Reset form data and close modal
+    setNewActivityData({
+      date: "",
+      route_name: "",
+      time: "",
+      distance: "",
+      calories_burned: "",
+      comments: "",
+    });
+    handleCloseModal();
+  };
 
   return (
     <Stack
@@ -195,14 +279,14 @@ export default function HomePage() {
 
       <Stack
         aria-label="right-side"
-        spacing={3}
+        spacing={10}
         sx={{
           marginRight: "1vw",
           marginTop: "1vh",
           width: "50vw",
           height: "88vh",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
         }}
       >
@@ -211,7 +295,7 @@ export default function HomePage() {
           arial-label="top-carusel"
           sx={{
             width: "50vw",
-            height: "44vh",
+            height: "40vh",
             backgroundColor: "primary.light",
             display: "flex",
             justifyContent: "center",
@@ -284,39 +368,139 @@ export default function HomePage() {
           </Swiper>
         </Stack>
 
-        {/* Recent Activity Table */}
-        <Box
+        <Typography
           sx={{
-            width: "50vw",
-            height: "44vh",
-            backgroundColor: "primary.light",
+            alignSelf: "flex-start",
+            fontWeight: "bold",
+            fontSize: "1.5rem",
+            maxWidth: "40vw",
+            height: "auto",
           }}
         >
-          <TableHead>
-            <TableRow>
-              <TableCell >Date</TableCell>
-              <TableCell>Place / Route</TableCell>
-              <TableCell>Duration</TableCell>
-              <TableCell>Distance</TableCell>
-              <TableCell>Calories</TableCell>
-              <TableCell>Comments</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {profile?.recent_activity?.map((activity) => {
-              return(
-              <TableRow key={activity.id}>
-                <TableCell>{activity.date}</TableCell>
-                <TableCell>{activity.route_name}</TableCell>
-                <TableCell>{activity.time}</TableCell>
-                <TableCell>{activity.distance}</TableCell>
-                <TableCell>{activity.calories_burned}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-              )
-            })}
-          </TableBody>
-        </Box>
+          Recent Activity
+        </Typography>
+
+        {/* Recent Activity Table */}
+        <Stack
+          borderRadius={15}
+          sx={{
+            width: "50vw",
+            height: "35vh",
+            backgroundColor: "primary.light",
+            margin: 0,
+            paddingTop: "4vh",
+          }}
+        >
+
+          {/* Add new activity */}
+          <Stack sx={{ width: "17%", alignSelf: "flex-end", marginRight: "2%" }}>
+            <Button onClick={handleOpenModal} variant="contained">
+              <SvgIcon>
+                <AddIcon fontSize="small"/>
+              </SvgIcon>
+               Add new
+            </Button>
+          </Stack>
+
+          {/* Recent Activity Table */}
+          <TableContainer
+            sx={{ maxWidth: "100%", maxHeight: "100%", overflowX: "auto" }}
+          >
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="center" onClick={() => handleSort("date")}>
+                    <TableSortLabel
+                      active={orderBy === "date"}
+                      direction={orderBy === "date" ? order : "asc"}
+                    >
+                      Date
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell align="center">Place / Route</TableCell>
+                  <TableCell align="center">Duration</TableCell>
+                  <TableCell align="center">Distance</TableCell>
+                  <TableCell align="center">Calories</TableCell>
+                  <TableCell align="center">Comments</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {paginatedActivities.map((activity) => (
+                  <TableRow key={activity.id}>
+                    <TableCell align="center" sx={{ maxWidth: "70px" }}>
+                      {activity.date}
+                    </TableCell>
+                    <TableCell align="center" sx={{ maxWidth: "70px" }}>
+                      {activity.route_name}
+                    </TableCell>
+                    <TableCell align="center" sx={{ maxWidth: "20px" }}>
+                      {activity.time}
+                    </TableCell>
+                    <TableCell align="center" sx={{ maxWidth: "20px" }}>
+                      {activity.distance}
+                    </TableCell>
+                    <TableCell align="center" sx={{ maxWidth: "20px" }}>
+                      {activity.calories_burned}
+                    </TableCell>
+                    <TableCell align="center" sx={{ maxWidth: "500px" }}>
+                      {activity.comments}
+                      <Stack sx={{ width: "5%", alignSelf: "flex-end" }}>
+                        <Button
+                          onClick={handleOpenModal}
+                          variant="text"
+                          size="small"
+                        >
+                          Edit...
+                          <EditIcon fontSize="small" />
+                        </Button>
+                      </Stack>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[3, 6, 9]}
+            component="div"
+            count={sortedActivities.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={(e, newPage) => setPage(newPage)}
+            onRowsPerPageChange={(e) => {
+              setRowsPerPage(parseInt(e.target.value, 10));
+              setPage(0);
+            }}
+          />
+
+          <Modal open={isModalOpen} onClose={handleCloseModal}>
+            <Box
+              sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                width: 400,
+                bgcolor: "background.paper",
+                borderRadius: 8,
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <TextField
+                name="date"
+                label="Date"
+                value={newActivityData.date}
+                onChange={handleInputChange}
+              />
+              {/* Add more TextField components for other activity fields */}
+              <Button onClick={handleCloseModal}>Cancel</Button>
+              <Button onClick={handleUpdateActivity}>
+                {editingActivity ? "Update Activity" : "Add Activity"}
+              </Button>
+            </Box>
+          </Modal>
+        </Stack>
       </Stack>
     </Stack>
   );

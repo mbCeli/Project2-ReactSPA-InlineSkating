@@ -4,7 +4,7 @@
 }
 
 /* Swipper */
-*,
+/* *,
 *::before,
 *::after {
   margin: 0;
@@ -12,7 +12,7 @@
   box-sizing: border-box;
   list-style-type: none;
 }
-
+ */
 .swiper_container {
   position: relative;
   display: flex;
@@ -24,8 +24,8 @@
 .swiper-wrapper {
   position: relative;
   display: flex;
-  justify-content: center; /* Center the carousel horizontally */
-  align-items: center; /* Center the carousel vertically */
+  justify-content: center;
+  align-items: center; 
 }
 
 .swiper-slide {
@@ -83,4 +83,9 @@
 
 .swiper-pagination .swiper-pagination-bullet-active {
   background: black;
+}
+
+ /* To remove the 80px marginTop from the console. */
+.css-5jovez-MuiStack-root>:not(style)~:not(style) {
+  margin-top: 20px !important;
 }
