@@ -18,7 +18,7 @@ import HomeIcon from "@mui/icons-material/Home";
 
 import { Link as RouterLink } from "react-router-dom";
 
-import RollOnLineIcon from "../assets/images/reshot-icon-roller-skate-2S9UAGYNPW.svg";
+import RollOnLineIcon from "../../assets/images/reshot-icon-roller-skate-2S9UAGYNPW.svg";
 
 export default function ClippedDrawer() {
   //Links to the respective pages
