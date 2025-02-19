@@ -37,6 +37,11 @@ import { baseURL } from "../App";
 
 export default function HomePage() {
   const [profile, setProfile] = useState({});
+  const [stats, setStats] = useState({});
+  const [goals, setGoals] = useState({});
+  const [equipment, setEquipment] = useState({});
+  const [challenges, setChallenges] = useState([]);
+  const [activities, setActivities] = useState([]);
   //to track pagination
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(3);
@@ -55,8 +60,8 @@ export default function HomePage() {
     calories_burned: "",
     comments: "",
   });
-//to check whether I press the add or edit button
-const [editingMode, setEditingMode] = useState(false);
+  //to check whether I press the add or edit button
+  const [editingMode, setEditingMode] = useState(false);
 
   //get profile info (GET)
   const getProfile = () => {
@@ -70,6 +75,66 @@ const [editingMode, setEditingMode] = useState(false);
     getProfile();
   }, []);
 
+  //get stats info (GET)
+  const getStats = () => {
+    axios
+      .get(`${baseURL}/skating_stats`)
+      .then((response) => setStats(response.data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getStats();
+  }, []);
+
+  //get goals info (GET)
+  const getGoals = () => {
+    axios
+      .get(`${baseURL}/skating_goals`)
+      .then((response) => setGoals(response.data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getGoals();
+  }, []);
+
+  //get equipment info (GET)
+  const getEquipment = () => {
+    axios
+      .get(`${baseURL}/equipment`)
+      .then((response) => setEquipment(response.data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getEquipment();
+  }, []);
+
+  //get challenges info (GET)
+  const getChallenges = () => {
+    axios
+      .get(`${baseURL}/challenges`)
+      .then((response) => setChallenges(response.data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getChallenges();
+  }, []);
+
+  //get activity info (GET)
+  const getActivities = () => {
+    axios
+      .get(`${baseURL}/recent_activity`)
+      .then((response) => setActivities(response.data))
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getActivities();
+  }, []);
+
   // sort function for activities by date
   const handleSort = (property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -78,7 +143,7 @@ const [editingMode, setEditingMode] = useState(false);
   };
 
   // calculate sorted and paginated activities based on their state
-  const sortedActivities = profile?.recent_activity?.sort((a, b) =>
+  const sortedActivities = activities.sort((a, b) =>
     order === "asc"
       ? new Date(a.date) - new Date(b.date)
       : new Date(b.date) - new Date(a.date)
@@ -87,46 +152,44 @@ const [editingMode, setEditingMode] = useState(false);
     ? sortedActivities.slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     : [];
 
-  if (!profile || !profile.recent_activity) {
+  if (!activities) {
     return <Typography>Error: Unable to fetch recent activities.</Typography>;
   }
 
   //handle opening and closing modal
-const handleOpenModal = (editMode = false) => {
-  setIsModalOpen(true);
-  setEditingMode(editMode);
-};
+  const handleOpenModal = (editMode = false) => {
+    setIsModalOpen(true);
+    setEditingMode(editMode);
+  };
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-  
+
   //create new activity (POST)
   const handleAddActivity = (e) => {
     e.preventDefault();
-    const newActivity = { ...newActivityData }; // Make a copy of the original object so we don't modify the original
+    const newActivity = { ...newActivityData }; // make a copy of the original object so we don't modify the original
 
-          const requestBody = {
-            id: newActivity.id,
-            date: newActivity.date,
-            route_name: newActivity.route_name,
-            distance: newActivity.distance,
-            time: newActivity.time,
-            calories_burned: newActivity.calories_burned,
-            comments: newActivity.comments,
-          };
+    const requestBody = {
+      id: newActivity.id,
+      date: newActivity.date,
+      route_name: newActivity.route_name,
+      distance: newActivity.distance,
+      time: newActivity.time,
+      calories_burned: newActivity.calories_burned,
+      comments: newActivity.comments,
+    };
 
-    // POST request to the API add the new activity
+    //post request to the API, and add the new activity
     axios
-      .post(`${baseURL}/profile/`, { requestBody })
+      .post(`${baseURL}/recent_activity`, requestBody)
       .then((response) => {
-        setProfile((prevProfile) => ({
-          ...prevProfile,
-          recent_activity: [
-            ...prevProfile.recent_activity,
-            response.data.newActivity,
-          ],
-        }));
-        // Reset the form data
+        setActivities((prevActivities) => [
+          ...prevActivities, //I want to add an activity so I make a copy of the existing activities
+          response.data
+        ]);
+  
+        // reset the form data
         setNewActivityData({
           date: "",
           route_name: "",
@@ -143,7 +206,7 @@ const handleOpenModal = (editMode = false) => {
         // Handle any error scenarios or display error messages
       });
   };
-  
+
   const handleInputChange = (e) => {
     setNewActivityData({
       ...newActivityData,
@@ -158,18 +221,22 @@ const handleOpenModal = (editMode = false) => {
     handleOpenModal();
   };
 
-
   const handleUpdateActivity = (e) => {
     e.preventDefault();
     const updatedActivity = { ...newActivityData }; // Make a copy of the original object so we don't modify the original
     const activityId = editingActivity.id;
     axios
-      .put(`${baseURL}/profile/recent_activity/${activityId}`, { updatedActivity })
+      .put(`${baseURL}/profile/recent_activity/${activityId}`, {
+        updatedActivity,
+      })
       .then((response) => {
         setProfile((prevProfile) => ({
           ...prevProfile, // this is for keeping the existing profile data
-          recent_activity: prevProfile.recent_activity.map((activity) => // this will go to the existing array of activities within the existing profile data and for each activity
-            activity.id === activityId ? response.data.newActivity : activity // it will check if the id of the activity is the same as the id of the activity we are trying to update, if it is, it will return the new activity, if not, it will return the existing activity
+          recent_activity: prevProfile.recent_activity.map(
+            (
+              activity // this will go to the existing array of activities within the existing profile data and for each activity
+            ) =>
+              activity.id === activityId ? response.data.newActivity : activity // it will check if the id of the activity is the same as the id of the activity we are trying to update, if it is, it will return the new activity, if not, it will return the existing activity
           ),
         }));
         // Reset the form data
@@ -257,39 +324,39 @@ const handleOpenModal = (editMode = false) => {
             <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
               <span style={{ fontWeight: "bold" }}>Skates </span>
               <br />
-              {profile?.skates?.name}
+              {equipment?.skates?.name}
               <br />
-              Type - {profile?.skates?.type}
+              Type - {equipment?.skates?.type}
               <br />
-              <img src={profile?.skates?.image} alt="skates pictures" />
+              <img src={equipment?.skates?.image} alt="skates pictures" />
             </Grid2>
             <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
               <span style={{ fontWeight: "bold" }}>Helmet </span>
               <br />
-              {profile?.helmet?.name}
+              {equipment?.helmet?.name}
               <br />
-              Model - {profile?.helmet?.model}
+              Model - {equipment?.helmet?.model}
               <br />
-              <img src={profile?.helmet?.image} alt="helmet pictures" />
+              <img src={equipment?.helmet?.image} alt="helmet pictures" />
             </Grid2>
             <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
               <span style={{ fontWeight: "bold" }}>Knee Pads</span>
               <br />
-              {profile?.knee_pads?.name}
+              {equipment?.knee_pads?.name}
               <br />
-              Model - {profile?.knee_pads?.model}
+              Model - {equipment?.knee_pads?.model}
               <br />
-              <img src={profile?.knee_pads?.image} alt="knee_pads pictures" />
+              <img src={equipment?.knee_pads?.image} alt="knee_pads pictures" />
             </Grid2>
             <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
               <span style={{ fontWeight: "bold" }}>Wrist Guards</span>
               <br />
-              {profile?.wrist_protectors?.name}
+              {equipment?.wrist_protectors?.name}
               <br />
-              Model - {profile?.wrist_protectors?.model}
+              Model - {equipment?.wrist_protectors?.model}
               <br />
               <img
-                src={profile?.wrist_protectors?.image}
+                src={equipment?.wrist_protectors?.image}
                 alt="wrist_protectors pictures"
               />
             </Grid2>
@@ -310,35 +377,35 @@ const handleOpenModal = (editMode = false) => {
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Weekly</span>
             <br />
-            Distance - {profile?.skating_stats?.weekly_distance} m
+            Distance - {stats.weekly_distance} m
             <br />
-            Sessions - {profile?.skating_stats?.weekly_sessions}
+            Sessions - {stats.weekly_sessions}
             <br />
-            Time - {profile?.skating_stats?.weekly_time} min
+            Time - {stats.weekly_time} min
             <br />
-            Calories - {profile?.skating_stats?.weekly_calories}
+            Calories - {stats.weekly_calories}
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Monthly</span>
             <br />
-            Distance - {profile?.skating_stats?.monthly_distance} m
+            Distance - {stats.monthly_distance} m
             <br />
-            Sessions - {profile?.skating_stats?.monthly_sessions}
+            Sessions - {stats.monthly_sessions}
             <br />
-            Time - {profile?.skating_stats?.monthly_time} min
+            Time - {stats.monthly_time} min
             <br />
-            Calories - {profile?.skating_stats?.monthly_calories}
+            Calories - {stats.monthly_calories}
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Yearly Goals</span>
             <br />
-            Distance - {profile?.skating_goals?.yearly_distance_goal} m
+            Distance - {goals.yearly_distance_goal} m
             <br />
-            Sessions - {profile?.skating_goals?.yearly_sessions_goal}
+            Sessions - {goals.yearly_sessions_goal}
             <br />
-            Time - {profile?.skating_goals?.yearly_time_goal} min
+            Time - {goals.yearly_time_goal} min
             <br />
-            Calories - {profile?.skating_goals?.yearly_calories_goal}
+            Calories - {goals.yearly_calories_goal}
           </Grid2>
         </Grid2>
       </Box>
@@ -388,7 +455,7 @@ const handleOpenModal = (editMode = false) => {
             }}
             modules={[EffectCoverflow, Pagination, Navigation]}
           >
-            {profile?.challenges?.map((challenge) => {
+            {challenges.map((challenge) => {
               return (
                 <SwiperSlide key={challenge.id} className="swiper-slide">
                   <Box
