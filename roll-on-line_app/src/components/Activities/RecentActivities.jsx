@@ -1,6 +1,5 @@
 import {
   Button,
-  Box,
   Stack,
   SvgIcon,
   Table,
@@ -10,8 +9,6 @@ import {
   TableRow,
   TablePagination, //from material ui example
   TableSortLabel, //from material ui example
-  Modal,
-  TextField,
   Typography,
   TableContainer,
 } from "@mui/material";
@@ -24,12 +21,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { baseURL } from "../../App";
+import Modal from "../ModalForm/ModalForm";
 
 export default function RecentActivities() {
   const [activities, setActivities] = useState([]);
   //to track pagination
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [rowsPerPage, setRowsPerPage] = useState(2);
   //to sort by
   const [orderBy, setOrderBy] = useState("date");
   const [order, setOrder] = useState("asc");
@@ -67,120 +65,12 @@ export default function RecentActivities() {
     setOrderBy(property);
   };
 
-  //to handle the modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingActivity, setEditingActivity] = useState(null);
-  //for adding new data
-  const [newActivityData, setNewActivityData] = useState({
-    date: "",
-    route_name: "",
-    time: "",
-    distance: "",
-    calories_burned: "",
-    comments: "",
-  });
-  //to check whether I press the add or edit button
-  const [editingMode, setEditingMode] = useState(false);
-
-  //handle opening and closing modal
-  const handleOpenModal = (editMode = false) => {
-    setIsModalOpen(true);
-    setEditingMode(editMode);
-  };
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  //create new activity (POST)
-  const handleAddActivity = (e) => {
-    e.preventDefault();
-    const newActivity = { ...newActivityData }; // make a copy of the original object so we don't modify the original
-
-    const requestBody = {
-      id: newActivity.id,
-      date: newActivity.date,
-      route_name: newActivity.route_name,
-      distance: newActivity.distance,
-      time: newActivity.time,
-      calories_burned: newActivity.calories_burned,
-      comments: newActivity.comments,
-    };
-
-    //post request to the API, and add the new activity
+  //delet activity (PUT)
+  const handleDelete = (activityId) => {
     axios
-      .post(`${baseURL}/recent_activity`, requestBody)
-      .then((response) => {
-        setActivities((prevActivities) => [
-          ...prevActivities, //I want to add an activity so I make a copy of the existing activities
-          response.data,
-        ]);
-
-        // reset the form data
-        setNewActivityData({
-          date: "",
-          route_name: "",
-          time: "",
-          distance: "",
-          calories_burned: "",
-          comments: "",
-        });
-        // Close the modal after adding the new activity
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.error(`Error adding activity. Please try again. ${error}`);
-        // Handle any error scenarios or display error messages
-      });
-  };
-
-  const handleInputChange = (e) => {
-    setNewActivityData({
-      ...newActivityData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  //edit activity (PUT)
-  const handleEditActivity = (activity) => {
-    setEditingActivity(activity);
-    setNewActivityData({ ...activity });
-    handleOpenModal();
-  };
-
-  const handleUpdateActivity = (e) => {
-    e.preventDefault();
-    const updatedActivity = { ...newActivityData }; // Make a copy of the original object so we don't modify the original
-    const activityId = editingActivity.id;
-    axios
-      .put(`${baseURL}/profile/recent_activity/${activityId}`, {
-        updatedActivity,
-      })
-      .then((response) => {
-        setProfile((prevProfile) => ({
-          ...prevProfile, // this is for keeping the existing profile data
-          recent_activity: prevProfile.recent_activity.map(
-            (
-              activity // this will go to the existing array of activities within the existing profile data and for each activity
-            ) =>
-              activity.id === activityId ? response.data.newActivity : activity // it will check if the id of the activity is the same as the id of the activity we are trying to update, if it is, it will return the new activity, if not, it will return the existing activity
-          ),
-        }));
-        // Reset the form data
-        setNewActivityData({
-          date: "",
-          route_name: "",
-          time: "",
-          distance: "",
-          calories_burned: "",
-          comments: "",
-        });
-        // Close the modal after adding the new activity
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.error(`Error adding activity. Please try again. ${error}`);
-        // Handle any error scenarios or display error messages
-      });
+      .delete(`${baseURL}/recent_activity/${activityId}`)
+      .then(() => location.reload())
+      .catch((error) => console.log("Activity could not be deleted:", error));
   };
 
   return (
@@ -201,7 +91,7 @@ export default function RecentActivities() {
         borderRadius={15}
         sx={{
           width: "50vw",
-          height: "35vh",
+          height: "39vh",
           backgroundColor: "primary.light",
           margin: 0,
           paddingTop: "4vh",
@@ -246,6 +136,7 @@ export default function RecentActivities() {
                 <TableCell align="center">Distance</TableCell>
                 <TableCell align="center">Calories</TableCell>
                 <TableCell align="center">Comments</TableCell>
+                <TableCell align="center">Edit / Delete</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -266,40 +157,27 @@ export default function RecentActivities() {
                   <TableCell align="center" sx={{ maxWidth: "20px" }}>
                     {activity.calories_burned}
                   </TableCell>
-                  <TableCell align="center" sx={{ maxWidth: "500px" }}>
+                  <TableCell align="left" sx={{ maxWidth: "500px" }}>
                     {activity.comments}
-                    <Stack
-                      sx={{
-                        width: "5%",
-                        alignSelf: "flex-end",
-                        display: "inline-block",
-                      }}
+                  </TableCell>
+                  <TableCell sx={{ maxWidth: "10px" }}>
+                    <Button
+                      onClick={() => handleOpenModal(true)}
+                      variant="text"
+                      size="small"
                     >
-                      <Button
-                        onClick={() => handleOpenModal(true)}
-                        variant="text"
-                        size="small"
-                      >
-                        Edit...
-                        <EditIcon fontSize="small" />
-                      </Button>
-                    </Stack>
-                    <Stack
-                      sx={{
-                        width: "5%",
-                        alignSelf: "flex-end",
-                        display: "inline-block",
-                      }}
+                      Edit...
+                      <EditIcon fontSize="small" />
+                    </Button>
+
+                    <Button
+                      onClick={() => handleDelete(activity.id)}
+                      variant="text"
+                      size="small"
                     >
-                      <Button
-                        /* onClick={handleDelete} */
-                        variant="text"
-                        size="small"
-                      >
-                        Delete
-                        <DeleteIcon fontSize="small" />
-                      </Button>
-                    </Stack>
+                      Delete
+                      <DeleteIcon fontSize="small" />
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -320,84 +198,8 @@ export default function RecentActivities() {
         />
       </Stack>
 
-      <Modal open={isModalOpen} onClose={handleCloseModal}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            borderRadius: 8,
-            boxShadow: 24,
-            p: 4,
-            display: "flex",
-            flexDirection: "column",
-            marginBottom: 10,
-          }}
-        >
-          <TextField
-            required
-            name="date"
-            label="Date"
-            placeholder="YYYY-MM-DD"
-            value={newActivityData.date}
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            required
-            name="route_name"
-            label="Route or Place name"
-            value={newActivityData.route_name}
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            required
-            name="time"
-            label="Duration"
-            placeholder="minutes"
-            value={newActivityData.time}
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            required
-            name="distance"
-            label="Distance"
-            placeholder="km"
-            value={newActivityData.distance}
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            name="calories_burned"
-            label="Calories Burned"
-            value={newActivityData.calories_burned}
-            onChange={handleInputChange}
-          />
-
-          <TextField
-            multiline
-            rows={4}
-            name="comments"
-            label="Add additional comments"
-            value={newActivityData.comments}
-            onChange={handleInputChange}
-          />
-
-          {/* If Add New Activity is clicked, it will call the handleAddActivity function, if Edit Activity is clicked, it will call the handleUpdateActivity function*/}
-
-          <Button
-            onClick={editingMode ? handleUpdateActivity : handleAddActivity}
-          >
-            {editingMode ? "Update Activity" : "Add Activity"}
-          </Button>
-          <Button onClick={handleCloseModal}>Cancel</Button>
-        </Box>
-      </Modal>
+          {/* Modal questionaire */}
+      <Modal />
     </Stack>
   );
 }

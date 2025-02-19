@@ -12,17 +12,27 @@ export default function HomePage() {
         display: "flex",
         flexDirection: "row",
         border: "2px solid red",
-        width: "86.5vw",
+        width: "90vw",
         height: "90vh",
         marginTop: "9.2vh",
       }}
     >
-      <Stack aria-label="left-side">
+      <Stack
+        aria-label="left-side"
+        sx={{
+          marginLeft: "0.5vw",
+        }}
+      >
         {/* Profile Dashboard */}
         <ProfileDashboard />
       </Stack>
 
-      <Stack aria-label="right-side">
+      <Stack
+        aria-label="right-side"
+        sx={{
+          marginLeft: "1vw",
+        }}
+      >
         {/* Challenges Carousel */}
         <ChallengesCarousel />
 
