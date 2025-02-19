@@ -20,6 +20,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useEffect, useState } from "react";
 
@@ -54,8 +55,10 @@ export default function HomePage() {
     calories_burned: "",
     comments: "",
   });
+//to check whether I press the add or edit button
+const [editingMode, setEditingMode] = useState(false);
 
-  //get profile info
+  //get profile info (GET)
   const getProfile = () => {
     axios
       .get(`${baseURL}/profile`)
@@ -89,20 +92,58 @@ export default function HomePage() {
   }
 
   //handle opening and closing modal
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
+const handleOpenModal = (editMode = false) => {
+  setIsModalOpen(true);
+  setEditingMode(editMode);
+};
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  
+  //create new activity (POST)
+  const handleAddActivity = (e) => {
+    e.preventDefault();
+    const newActivity = { ...newActivityData }; // Make a copy of the original object so we don't modify the original
 
-  const handleEditActivity = (activity) => {
-    setEditingActivity(activity);
-    setNewActivityData({ ...activity });
-    handleOpenModal();
+          const requestBody = {
+            id: newActivity.id,
+            date: newActivity.date,
+            route_name: newActivity.route_name,
+            distance: newActivity.distance,
+            time: newActivity.time,
+            calories_burned: newActivity.calories_burned,
+            comments: newActivity.comments,
+          };
+
+    // POST request to the API add the new activity
+    axios
+      .post(`${baseURL}/profile/`, { requestBody })
+      .then((response) => {
+        setProfile((prevProfile) => ({
+          ...prevProfile,
+          recent_activity: [
+            ...prevProfile.recent_activity,
+            response.data.newActivity,
+          ],
+        }));
+        // Reset the form data
+        setNewActivityData({
+          date: "",
+          route_name: "",
+          time: "",
+          distance: "",
+          calories_burned: "",
+          comments: "",
+        });
+        // Close the modal after adding the new activity
+        handleCloseModal();
+      })
+      .catch((error) => {
+        console.error(`Error adding activity. Please try again. ${error}`);
+        // Handle any error scenarios or display error messages
+      });
   };
-
+  
   const handleInputChange = (e) => {
     setNewActivityData({
       ...newActivityData,
@@ -110,37 +151,44 @@ export default function HomePage() {
     });
   };
 
-  const handleUpdateActivity = () => {
-    // Logic to add or update activities based on newActivityData
-    // Reset form data and close modal
-    setNewActivityData({
-      date: "",
-      route_name: "",
-      time: "",
-      distance: "",
-      calories_burned: "",
-      comments: "",
-    });
-    handleCloseModal();
+  //edit activity (PUT)
+  const handleEditActivity = (activity) => {
+    setEditingActivity(activity);
+    setNewActivityData({ ...activity });
+    handleOpenModal();
   };
 
-  //add new activity
-const handleAddActivity = () => {
-  const newActivity = { ...newActivityData };
-  setProfile((prevProfile) => ({
-    ...prevProfile,
-    recent_activity: [...prevProfile.recent_activity, newActivity],
-  }));
-  setNewActivityData({
-    date: "",
-    route_name: "",
-    time: "",
-    distance: "",
-    calories_burned: "",
-    comments: "",
-  });
-  handleCloseModal(); // Close the modal after adding the new activity
-};
+
+  const handleUpdateActivity = (e) => {
+    e.preventDefault();
+    const updatedActivity = { ...newActivityData }; // Make a copy of the original object so we don't modify the original
+    const activityId = editingActivity.id;
+    axios
+      .put(`${baseURL}/profile/recent_activity/${activityId}`, { updatedActivity })
+      .then((response) => {
+        setProfile((prevProfile) => ({
+          ...prevProfile, // this is for keeping the existing profile data
+          recent_activity: prevProfile.recent_activity.map((activity) => // this will go to the existing array of activities within the existing profile data and for each activity
+            activity.id === activityId ? response.data.newActivity : activity // it will check if the id of the activity is the same as the id of the activity we are trying to update, if it is, it will return the new activity, if not, it will return the existing activity
+          ),
+        }));
+        // Reset the form data
+        setNewActivityData({
+          date: "",
+          route_name: "",
+          time: "",
+          distance: "",
+          calories_burned: "",
+          comments: "",
+        });
+        // Close the modal after adding the new activity
+        handleCloseModal();
+      })
+      .catch((error) => {
+        console.error(`Error adding activity. Please try again. ${error}`);
+        // Handle any error scenarios or display error messages
+      });
+  };
 
   return (
     <Stack
@@ -413,7 +461,11 @@ const handleAddActivity = () => {
           <Stack
             sx={{ width: "17%", alignSelf: "flex-end", marginRight: "2%" }}
           >
-            <Button onClick={handleOpenModal} variant="contained">
+            <Button
+              onClick={() => handleOpenModal(false)}
+              variant="contained"
+              className="add-button"
+            >
               <SvgIcon>
                 <AddIcon fontSize="small" />
               </SvgIcon>
@@ -423,7 +475,12 @@ const handleAddActivity = () => {
 
           {/* Recent Activity Table */}
           <TableContainer
-            sx={{ maxWidth: "100%", maxHeight: "100%", overflowX: "auto" }}
+            sx={{
+              maxWidth: "100%",
+              maxHeight: "100%",
+              overflowX: "auto",
+              fontSize: "0.1rem",
+            }}
           >
             <Table>
               <TableHead>
@@ -463,14 +520,36 @@ const handleAddActivity = () => {
                     </TableCell>
                     <TableCell align="center" sx={{ maxWidth: "500px" }}>
                       {activity.comments}
-                      <Stack sx={{ width: "5%", alignSelf: "flex-end" }}>
+                      <Stack
+                        sx={{
+                          width: "5%",
+                          alignSelf: "flex-end",
+                          display: "inline-block",
+                        }}
+                      >
                         <Button
-                          onClick={handleOpenModal}
+                          onClick={() => handleOpenModal(true)}
                           variant="text"
                           size="small"
                         >
                           Edit...
                           <EditIcon fontSize="small" />
+                        </Button>
+                      </Stack>
+                      <Stack
+                        sx={{
+                          width: "5%",
+                          alignSelf: "flex-end",
+                          display: "inline-block",
+                        }}
+                      >
+                        <Button
+                          /* onClick={handleDelete} */
+                          variant="text"
+                          size="small"
+                        >
+                          Delete
+                          <DeleteIcon fontSize="small" />
                         </Button>
                       </Stack>
                     </TableCell>
@@ -510,7 +589,7 @@ const handleAddActivity = () => {
               }}
             >
               <TextField
-              required  
+                required
                 name="date"
                 label="Date"
                 placeholder="YYYY-MM-DD"
@@ -560,8 +639,12 @@ const handleAddActivity = () => {
                 onChange={handleInputChange}
               />
 
-              <Button onClick={handleAddActivity}>
-                {editingActivity ? "Update Activity" : "Add Activity"}
+              {/* If Add New Activity is clicked, it will call the handleAddActivity function, if Edit Activity is clicked, it will call the handleUpdateActivity function*/}
+
+              <Button
+                onClick={editingMode ? handleUpdateActivity : handleAddActivity}
+              >
+                {editingMode ? "Update Activity" : "Add Activity"}
               </Button>
               <Button onClick={handleCloseModal}>Cancel</Button>
             </Box>
