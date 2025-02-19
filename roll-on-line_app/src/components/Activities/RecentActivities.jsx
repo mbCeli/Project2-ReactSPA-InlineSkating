@@ -49,14 +49,6 @@ export default function RecentActivities() {
   //to check whether I press the add or edit button
   const [editingMode, setEditingMode] = useState(false);
 
-  const [date, setDate] = useState("");
-  const [route_name, setRoute_name] = useState("");
-  const [time, setTime] = useState("");
-  const [distance, setDistance] = useState("");
-  const [calories_burned, setCalories_burned] = useState("");
-  const [comments, setComments] = useState("");
-
-  const activityId = activities.map((activity) => activity.id)
 
 
   //get activity info (GET)
@@ -91,6 +83,8 @@ export default function RecentActivities() {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+
+
 
   //handle opening and closing modal
   const handleOpenModal = (editMode = false) => {
@@ -143,51 +137,40 @@ export default function RecentActivities() {
       });
   };
 
-  useEffect((activityId) => { // as I am going to update the data I need to get it first
-    axios
-    .get(`${baseURL}/recent_activity/${activityId}`)// I need the id of the activity that Im going to edit
-    .then((response) => {
-      const oneActivity = response.data;
-      setDate(oneActivity.date);
-      setRoute_name(oneActivity.route_name);  
-      setTime(oneActivity.time);
-      setDistance(oneActivity.distance);
-      setCalories_burned(oneActivity.calories_burned);
-      setComments(oneActivity.comments);
-    })
-    .catch((error) => console.log("Could not get activity", error))
-  }, [])
-
-  const handleInputChange = (e) => {
+const handleInputChange = (e) => {
+  if (editingMode) {
     setEditingActivity({
       ...editingActivity,
       [e.target.name]: e.target.value,
     });
-  };
+  } else {
+    setNewActivityData({
+      ...newActivityData,
+      [e.target.name]: e.target.value,
+    });
+  }
+};
 
-/*   const handleEditActivity = (activity) => {
-    setEditingActivity(activity);
-    setNewActivityData({ ...activity });
-    handleOpenModal();
-  }; */
   
   //edit activity (PUT)
-  const handleUpdateActivity = (e, activityId) => {
-    e.preventDefault();
+ const handleUpdateActivity = (e, activityId) => {
+   e.preventDefault();
 
-    axios
-      .put(`${baseURL}/recent_activity/${activityId}`, editingActivity)
-      .then(() => {
-        setEditingActivity(null);
-        setActivities(editingActivity)
-        // Close the modal after adding the new activity
-        handleCloseModal();
-      })
-      .catch((error) => {
-        console.error(`Error adding activity. Please try again. ${error}`);
-        // Handle any error scenarios or display error messages
-      });
-  };
+   axios
+     .put(`${baseURL}/recent_activity/${activityId}`, editingActivity)
+     .then(() => {
+       setEditingActivity(null);
+       setActivities((prevActivities) =>
+         prevActivities.map((activity) =>
+           activity.id === activityId ? editingActivity : activity
+         )
+       );
+       handleCloseModal();
+     })
+     .catch((error) => {
+       console.error(`Error updating activity. Please try again. ${error}`);
+     });
+ };
 
   //delet activity (PUT)
   const handleDelete = (activityId) => {
@@ -344,7 +327,7 @@ export default function RecentActivities() {
             name="date"
             label="Date"
             placeholder="YYYY-MM-DD"
-            value={newActivityData.date}
+            value={editingMode ? editingActivity.date : newActivityData.date}
             onChange={handleInputChange}
           />
 
@@ -352,7 +335,11 @@ export default function RecentActivities() {
             required
             name="route_name"
             label="Route or Place name"
-            value={newActivityData.route_name}
+            value={
+              editingMode
+                ? editingActivity.route_name
+                : newActivityData.route_name
+            }
             onChange={handleInputChange}
           />
 
@@ -361,7 +348,7 @@ export default function RecentActivities() {
             name="time"
             label="Duration"
             placeholder="minutes"
-            value={newActivityData.time}
+            value={editingMode ? editingActivity.time : newActivityData.time}
             onChange={handleInputChange}
           />
 
@@ -370,14 +357,20 @@ export default function RecentActivities() {
             name="distance"
             label="Distance"
             placeholder="km"
-            value={newActivityData.distance}
+            value={
+              editingMode ? editingActivity.distance : newActivityData.distance
+            }
             onChange={handleInputChange}
           />
 
           <TextField
             name="calories_burned"
             label="Calories Burned"
-            value={newActivityData.calories_burned}
+            value={
+              editingMode
+                ? editingActivity.calories_burned
+                : newActivityData.calories_burned
+            }
             onChange={handleInputChange}
           />
 
@@ -386,18 +379,16 @@ export default function RecentActivities() {
             rows={4}
             name="comments"
             label="Add additional comments"
-            value={newActivityData.comments}
+            value={
+              editingMode ? editingActivity.comments : newActivityData.comments
+            }
             onChange={handleInputChange}
           />
 
           {/* If Add New Activity is clicked, it will call the handleAddActivity function, if Edit Activity is clicked, it will call the handleUpdateActivity function*/}
 
           <Button
-            onClick={
-              editingMode
-                ? () => handleUpdateActivity(activityId)
-                : handleAddActivity
-            }
+            onClick={editingMode ? handleUpdateActivity : handleAddActivity}
           >
             {editingMode ? "Update Activity" : "Add Activity"}
           </Button>
