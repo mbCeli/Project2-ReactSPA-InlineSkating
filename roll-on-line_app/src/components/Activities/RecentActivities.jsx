@@ -87,10 +87,15 @@ export default function RecentActivities() {
 
 
   //handle opening and closing modal
-  const handleOpenModal = (editMode = false) => {
-    setIsModalOpen(true);
-    setEditingMode(editMode);
-  };
+const handleOpenModal = (editMode = false, activity = null) => {
+  setIsModalOpen(true);
+  setEditingMode(editMode);
+  if (editMode && activity) {
+    setEditingActivity({ ...activity }); // Populate editingActivity with the selected activity's data
+  } else {
+    setEditingActivity(null); // If not editing, reset editingActivity
+  }
+};
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -153,22 +158,28 @@ const handleInputChange = (e) => {
 
   
   //edit activity (PUT)
- const handleUpdateActivity = (e, activityId) => {
+ const handleUpdateActivity = (e) => {
    e.preventDefault();
 
+   if (!editingActivity) return; // Prevent update if no activity is being edited
+
+   const updatedActivity = {
+     ...editingActivity, // Get the data from editingActivity
+   };
+
    axios
-     .put(`${baseURL}/recent_activity/${activityId}`, editingActivity)
+     .put(`${baseURL}/recent_activity/${editingActivity.id}`, updatedActivity)
      .then(() => {
-       setEditingActivity(null);
        setActivities((prevActivities) =>
          prevActivities.map((activity) =>
-           activity.id === activityId ? editingActivity : activity
+           activity.id === editingActivity.id ? updatedActivity : activity
          )
        );
-       handleCloseModal();
+      
+       handleCloseModal(); // Close modal after update
      })
      .catch((error) => {
-       console.error(`Error updating activity. Please try again. ${error}`);
+       console.error("Error updating activity. Please try again.", error);
      });
  };
 
@@ -176,7 +187,12 @@ const handleInputChange = (e) => {
   const handleDelete = (activityId) => {
     axios
       .delete(`${baseURL}/recent_activity/${activityId}`)
-      .then(() => location.reload())
+      .then(() => {
+        // Update the state by filtering out the deleted activity
+        setActivities((prevActivities) =>
+          prevActivities.filter((activity) => activity.id !== activityId)
+        );
+      })
       .catch((error) => console.log("Activity could not be deleted:", error));
   };
 
@@ -269,7 +285,7 @@ const handleInputChange = (e) => {
                   </TableCell>
                   <TableCell sx={{ maxWidth: "10px" }}>
                     <Button
-                      onClick={() => handleOpenModal(true)}
+                      onClick={() => handleOpenModal(true, activity)}
                       variant="text"
                       size="small"
                     >
