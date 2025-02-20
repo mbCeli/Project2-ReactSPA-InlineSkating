@@ -25,6 +25,8 @@ import axios from "axios";
 
 import { baseURL } from "../../App";
 
+import "./RecentActivities.css";
+
 export default function RecentActivities() {
   const [activities, setActivities] = useState([]);
   //to track pagination
@@ -48,8 +50,6 @@ export default function RecentActivities() {
   });
   //to check whether I press the add or edit button
   const [editingMode, setEditingMode] = useState(false);
-
-
 
   //get activity info (GET)
   const getActivities = () => {
@@ -84,18 +84,16 @@ export default function RecentActivities() {
     setOrderBy(property);
   };
 
-
-
   //handle opening and closing modal
-const handleOpenModal = (editMode = false, activity = null) => {
-  setIsModalOpen(true);
-  setEditingMode(editMode);
-  if (editMode && activity) {
-    setEditingActivity({ ...activity }); // Populate editingActivity with the selected activity's data
-  } else {
-    setEditingActivity(null); // If not editing, reset editingActivity
-  }
-};
+  const handleOpenModal = (editMode = false, activity = null) => {
+    setIsModalOpen(true);
+    setEditingMode(editMode);
+    if (editMode && activity) {
+      setEditingActivity({ ...activity }); // Populate editingActivity with the selected activity's data
+    } else {
+      setEditingActivity(null); // If not editing, reset editingActivity
+    }
+  };
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -142,46 +140,45 @@ const handleOpenModal = (editMode = false, activity = null) => {
       });
   };
 
-const handleInputChange = (e) => {
-  if (editingMode) {
-    setEditingActivity({
-      ...editingActivity,
-      [e.target.name]: e.target.value,
-    });
-  } else {
-    setNewActivityData({
-      ...newActivityData,
-      [e.target.name]: e.target.value,
-    });
-  }
-};
+  const handleInputChange = (e) => {
+    if (editingMode) {
+      setEditingActivity({
+        ...editingActivity,
+        [e.target.name]: e.target.value,
+      });
+    } else {
+      setNewActivityData({
+        ...newActivityData,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
 
-  
   //edit activity (PUT)
- const handleUpdateActivity = (e) => {
-   e.preventDefault();
+  const handleUpdateActivity = (e) => {
+    e.preventDefault();
 
-   if (!editingActivity) return; // Prevent update if no activity is being edited
+    if (!editingActivity) return; // Prevent update if no activity is being edited
 
-   const updatedActivity = {
-     ...editingActivity, // Get the data from editingActivity
-   };
+    const updatedActivity = {
+      ...editingActivity, // Get the data from editingActivity
+    };
 
-   axios
-     .put(`${baseURL}/recent_activity/${editingActivity.id}`, updatedActivity)
-     .then(() => {
-       setActivities((prevActivities) =>
-         prevActivities.map((activity) =>
-           activity.id === editingActivity.id ? updatedActivity : activity
-         )
-       );
-      
-       handleCloseModal(); // Close modal after update
-     })
-     .catch((error) => {
-       console.error("Error updating activity. Please try again.", error);
-     });
- };
+    axios
+      .put(`${baseURL}/recent_activity/${editingActivity.id}`, updatedActivity)
+      .then(() => {
+        setActivities((prevActivities) =>
+          prevActivities.map((activity) =>
+            activity.id === editingActivity.id ? updatedActivity : activity
+          )
+        );
+
+        handleCloseModal(); // Close modal after update
+      })
+      .catch((error) => {
+        console.error("Error updating activity. Please try again.", error);
+      });
+  };
 
   //delet activity (PUT)
   const handleDelete = (activityId) => {

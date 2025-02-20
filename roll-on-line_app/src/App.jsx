@@ -9,21 +9,30 @@ import EventsPage from './pages/EventsPage';
 import HistoryPage from './pages/HistoryPage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
+import { ThemeProvider, createTheme } from '@mui/material';
 
 export const baseURL = import.meta.env.VITE_APP_API_URL;
 
 export default function App() {
+const theme = createTheme({
+  typography: {
+    fontFamily:"Comfortaa, san-serif"
+  }
+})
+
   return (
-    <main className="App">
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/events" element={<EventsPage />} />
-        <Route path="/skate_info" element={<HistoryPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </main>
+    <ThemeProvider theme={theme}>
+      <main className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/events" element={<EventsPage />} />
+          <Route path="/skate_info" element={<HistoryPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
+    </ThemeProvider>
   );
 }
 

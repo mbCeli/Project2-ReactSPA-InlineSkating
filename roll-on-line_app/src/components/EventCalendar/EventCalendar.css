@@ -1,0 +1,44 @@
+
+.weekdays{
+    width: calc(100% / 7);
+    font-size: clamp(1rem, 0.2cqi, 1rem);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.days{
+    font-size: clamp(0.7rem, 0.2cqi, 1rem);
+    width: calc(100% / 7);
+    aspect-ratio: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.current-day{
+    background-color: aqua;
+    border-radius: 50%;
+    box-shadow: 0 0 1.5rem 0.8rem rgba(0, 255, 255, 0.3);
+}
+
+input{
+    background-color: transparent;
+    border: none;
+    border-top: 0.2rem solid rgb(59, 118, 228);
+    border-bottom: 0.2rem solid rgb(59, 118, 228);
+    color: white;
+    width: clamp(4rem, 4cqi, 7rem );
+    height: 2rem;
+    text-align: center;
+    font-size:clamp(1.2rem, 1.2cqi, 1.6rem );
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    appearance: none;
+}
