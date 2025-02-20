@@ -12,7 +12,6 @@ import {
   Avatar,
   SvgIcon,
   Typography,
-  
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
 
@@ -66,8 +65,8 @@ export default function ClippedDrawer() {
             }}
           >
             <ListItem sx={{ marginBottom: 4, width: 165 }}>
-              <ListItemButton sx={{ width: 165 }}>
-                <Link component={RouterLink} to="/">
+              <Link component={RouterLink} to="/">
+                <ListItemButton sx={{ width: 165 }}>
                   <ListItemIcon>
                     <ListItemAvatar>
                       <Avatar>
@@ -75,45 +74,59 @@ export default function ClippedDrawer() {
                       </Avatar>
                     </ListItemAvatar>
                   </ListItemIcon>
-                </Link>
-                Home
-              </ListItemButton>
+                  <Typography variant="body1" sx={{ color: "white" }}>
+                    Home
+                  </Typography>
+                </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem sx={{ marginBottom: 4, width: 165 }}>
-              <ListItemButton sx={{ width: 165 }}>
-                <ListItemIcon>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <HomeIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                </ListItemIcon>
-                Events
-              </ListItemButton>
+              <Link component={RouterLink} to="/events">
+                <ListItemButton sx={{ width: 165 }}>
+                  <ListItemIcon>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <HomeIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                  </ListItemIcon>
+                  <Typography variant="body1" sx={{ color: "white" }}>
+                    Events
+                  </Typography>
+                </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem sx={{ marginBottom: 4, width: 165 }}>
-              <ListItemButton sx={{ width: 165 }}>
-                <ListItemIcon>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <HomeIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                </ListItemIcon>
-                History
-              </ListItemButton>
+              <Link component={RouterLink} to="/skate_info">
+                <ListItemButton sx={{ width: 165 }}>
+                  <ListItemIcon>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <HomeIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                  </ListItemIcon>
+                  <Typography variant="body1" sx={{ color: "white" }}>
+                    History
+                  </Typography>
+                </ListItemButton>
+              </Link>
             </ListItem>
-            <ListItem sx={{ marginBottom: 16, width: 165 }}>
-              <ListItemButton sx={{ width: 165 }}>
-                <ListItemIcon>
-                  <ListItemAvatar>
-                    <Avatar>
-                      <HomeIcon />
-                    </Avatar>
-                  </ListItemAvatar>
-                </ListItemIcon>
-                About
-              </ListItemButton>
+            <ListItem sx={{ marginBottom: 4, width: 165 }}>
+              <Link component={RouterLink} to="/about">
+                <ListItemButton sx={{ width: 165 }}>
+                  <ListItemIcon>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <HomeIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+                  </ListItemIcon>
+                  <Typography variant="body1" sx={{ color: "white" }}>
+                    About
+                  </Typography>
+                </ListItemButton>
+              </Link>
             </ListItem>
             <ListItem sx={{ width: 165 }}>
               <ListItemButton sx={{ width: 165 }}>
@@ -124,7 +137,14 @@ export default function ClippedDrawer() {
                     </Avatar>
                   </ListItemAvatar>
                 </ListItemIcon>
-                Github Repository
+                <Link
+                  href="https://github.com/mbCeli/Project2-ReactSPA-InlineSkating"
+                  target="_blank"
+                  variant="body1"
+                  sx={{ color: "white" }}
+                >
+                  Git Repository
+                </Link>
               </ListItemButton>
             </ListItem>
           </List>
