@@ -9,21 +9,40 @@
     justify-content: center;
 }
 
-.days{
-    font-size: clamp(0.7rem, 0.2cqi, 1rem);
-    width: calc(100% / 7);
-    aspect-ratio: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+.days {
+  font-size: clamp(0.7rem, 0.2cqi, 1rem);
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+}
+
+.calendar-days {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.calendar-day {
+  width: calc(100% / 7);
+  text-align: center;
 }
 
 .current-day{
     background-color: aqua;
     border-radius: 50%;
     box-shadow: 0 0 1.5rem 0.8rem rgba(0, 255, 255, 0.3);
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-30%);
+    font-size: clamp(1rem, 3cqi, 1.2rem);
+    font-weight: bold;
 }
 
 input{

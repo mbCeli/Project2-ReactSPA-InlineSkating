@@ -14,14 +14,68 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import "./EventCalendar.css";
 
+import { useState } from "react";
+
 export default function EventCalendar() {
+  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const monthsOfYear = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const currentDate = new Date();
+
+  const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
+  const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+  const [selectedDate, setSelectedDate] = useState(currentDate);
+  const [showEventPopup, setShowEventPopup] = useState(false);
+
+  const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); //this create an object that returns the number of days in the month
+  let firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay(); // Get the day of the week (0=Sun, 1=Mon, ..., 6=Sat)
+  if (firstDayOfMonth === 0) {
+    firstDayOfMonth = 6; // Adjust Sunday (0) to index 6
+  } else {
+    firstDayOfMonth--; // Adjust other days by subtracting 1 to align with the corrected daysOfWeek array
+  }
+  console.log(currentMonth, daysInMonth, firstDayOfMonth);
+
+  const preMonth = () => {
+    setCurrentMonth((preMonth) => (preMonth === 0 ? 11 : preMonth - 1));
+    setCurrentYear((preYear) => (currentMonth === 0 ? preYear - 1 : preYear));
+  };
+
+  const nextMonth = () => {
+    setCurrentMonth((preMonth) => (preMonth === 11 ? 0 : preMonth + 1));
+    setCurrentYear((preYear) => (currentMonth === 11 ? preYear + 1 : preYear));
+  };
+
+  const handleDateClick = (day) => {
+    const clickedDate = new Date(currentYear, currentMonth, day);
+    const today = new Date();
+
+    if (clickedDate >= today) {
+      setSelectedDate(clickedDate);
+      setShowEventPopup(true);
+    }
+  }
+
   return (
     <Stack
       sx={{
         width: "90%",
         minWidth: "90vmin",
         aspectRatio: "3 / 2",
-        height: "70%",
+        height: "80%",
         backgroundColor: "pink",
         padding: "3rem",
         borderRadius: "5rem",
@@ -35,7 +89,7 @@ export default function EventCalendar() {
       <Box
         /* className="calendar" */ sx={{
           width: "30%",
-          height: "60%",
+          height: "70%",
           boxShadow: 3,
           borderRadius: "7rem",
           padding: "2.5rem",
@@ -67,7 +121,7 @@ export default function EventCalendar() {
               fontSize: "clamp(1.5rem, 0.5cqi, 2.5rem)",
             }}
           >
-            February,
+            {monthsOfYear[currentMonth]}
           </Typography>
           <Typography
             variant="h5"
@@ -76,7 +130,7 @@ export default function EventCalendar() {
               fontSize: "clamp(1.5rem, 0.5cqi, 2.5rem)",
             }}
           >
-            2025
+            {currentYear}
           </Typography>
           <Box
             /* className="buttons" */ sx={{
@@ -84,12 +138,12 @@ export default function EventCalendar() {
               marginLeft: "auto",
             }}
           >
-            <Button>
+            <Button onClick={preMonth}>
               <Avatar sx={{ width: 25, height: 25 }}>
                 <NavigateBeforeIcon />
               </Avatar>
             </Button>
-            <Button>
+            <Button onClick={nextMonth}>
               <Avatar sx={{ width: 25, height: 25 }}>
                 <NavigateNextIcon />
               </Avatar>
@@ -104,51 +158,42 @@ export default function EventCalendar() {
             margin: "0.5rem 0",
           }}
         >
-          <span className="weekdays">Mon</span>
-          <span className="weekdays">Tue</span>
-          <span className="weekdays">Wed</span>
-          <span className="weekdays">Thu</span>
-          <span className="weekdays">Fri</span>
-          <span className="weekdays">Sat</span>
-          <span className="weekdays">Sun</span>
+          {daysOfWeek.map((day) => (
+            <span key={day} className="weekdays">
+              {day}
+            </span>
+          ))}
         </Box>
-        <Box /* className="days" */
+        <Box
           sx={{
+            /* className="days" */
             display: "flex",
             flexWrap: "wrap",
+            width: "100%",
           }}
+          className="calendar-days"
         >
-          <span className="days">1</span>
-          <span className="days">2</span>
-          <span className="days">3</span>
-          <span className="days">4</span>
-          <span className="days">5</span>
-          <span className="days">6</span>
-          <span className="days">7</span>
-          <span className="days">8</span>
-          <span className="days">9</span>
-          <span className="days">10</span>
-          <span className="days">11</span>
-          <span className="days">12</span>
-          <span className="days">13</span>
-          <span className="days">14</span>
-          <span className="days">15</span>
-          <span className="days">16</span>
-          <span className="days">17</span>
-          <span className="days">18</span>
-          <span className="days">19</span>
-          <span className="days current-day">20</span>
-          <span className="days">21</span>
-          <span className="days">22</span>
-          <span className="days">23</span>
-          <span className="days">24</span>
-          <span className="days">25</span>
-          <span className="days">26</span>
-          <span className="days">27</span>
-          <span className="days">28</span>
-          <span className="days">29</span>
-          <span className="days">30</span>
-          <span className="days">31</span>
+          {[...Array(firstDayOfMonth).keys()].map((_, index) => (
+            <span key={`empty-${index}`} className="calendar-day">
+              {" "}
+            </span>
+          ))}
+
+          {[...Array(daysInMonth).keys()].map((day) => (
+            <span
+              key={day + 1}
+              className={
+                day + 1 === currentDate.getDate() &&
+                currentMonth === currentDate.getMonth() &&
+                currentYear === currentDate.getFullYear()
+                  ? "calendar-day current-day "
+                  : "calendar-day"
+              }
+              onClick={() => handleDateClick(day + 1)}
+            >
+              {day + 1}
+            </span>
+          ))}
         </Box>
       </Box>
       <Box
@@ -161,7 +206,6 @@ export default function EventCalendar() {
         <Box
           /* className="event-popup" */
           sx={{
-            /* display:"none", */
             position: "absolute",
             top: "39%",
             left: "5rem",
@@ -170,7 +214,7 @@ export default function EventCalendar() {
             aspectRatio: "10 / 8",
             borderRadius: "2rem",
             boxShadow: "0 1rem 3rem rgba(0, 0, 0, 0.3)",
-            display: "flex",
+            display: "none" /* Hide or show */,
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
@@ -243,9 +287,9 @@ export default function EventCalendar() {
           <Button
             className="close-event-popup"
             sx={{
-              position:"absolute",
-              top:"1rem",
-              right:"1rem"
+              position: "absolute",
+              top: "1rem",
+              right: "1rem",
             }}
           >
             <CloseIcon />
@@ -263,7 +307,7 @@ export default function EventCalendar() {
             alignItems: "center",
             marginBottom: "1rem",
             position: "relative",
-            columnGap:"2rem"
+            columnGap: "2rem",
           }}
         >
           <Box
