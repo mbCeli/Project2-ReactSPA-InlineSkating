@@ -6,7 +6,7 @@ import axios from "axios";
 
 import { baseURL } from "../../App";
 import "./ProfileDashBoard.css";
-import cover from "../../assets/images/c1e54c33581e520e3346e503c67c4678.jpg";
+import cover from "../../../public/assets/images/c1e54c33581e520e3346e503c67c4678.jpg";
 
 
 
