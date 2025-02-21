@@ -13,10 +13,14 @@ import {
   Typography,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
+import TodayIcon from "@mui/icons-material/Today";
+import InfoIcon from "@mui/icons-material/Info";
+import GitHubIcon from "@mui/icons-material/GitHub";
 
 import { Link as RouterLink } from "react-router-dom";
 
 import RollOnLineIcon from "../../assets/images/reshot-icon-roller-skate-2S9UAGYNPW.svg";
+
 
 export default function ClippedDrawer() {
   //Links to the respective pages
@@ -75,7 +79,7 @@ export default function ClippedDrawer() {
                 <ListItemButton sx={{ width: 165 }}>
                   <ListItemIcon>
                     <ListItemAvatar>
-                      <Avatar>
+                      <Avatar sx={{ backgroundColor: "#F2C094" }}>
                         <HomeIcon />
                       </Avatar>
                     </ListItemAvatar>
@@ -91,8 +95,8 @@ export default function ClippedDrawer() {
                 <ListItemButton sx={{ width: 165 }}>
                   <ListItemIcon>
                     <ListItemAvatar>
-                      <Avatar>
-                        <HomeIcon />
+                      <Avatar sx={{ backgroundColor: "#F2C094" }}>
+                        <TodayIcon />
                       </Avatar>
                     </ListItemAvatar>
                   </ListItemIcon>
@@ -107,8 +111,8 @@ export default function ClippedDrawer() {
                 <ListItemButton sx={{ width: 165 }}>
                   <ListItemIcon>
                     <ListItemAvatar>
-                      <Avatar>
-                        <HomeIcon />
+                      <Avatar sx={{ backgroundColor: "#F2C094" }}>
+                        <InfoIcon />
                       </Avatar>
                     </ListItemAvatar>
                   </ListItemIcon>
@@ -118,12 +122,12 @@ export default function ClippedDrawer() {
                 </ListItemButton>
               </Link>
             </ListItem>
-            <ListItem sx={{ width: 165, marginTop:"25rem" }}>
+            <ListItem sx={{ width: 165, marginTop: "25rem" }}>
               <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>
-                    <Avatar>
-                      <HomeIcon />
+                    <Avatar sx={{ backgroundColor: "#F2C094" }}>
+                      <GitHubIcon />
                     </Avatar>
                   </ListItemAvatar>
                 </ListItemIcon>

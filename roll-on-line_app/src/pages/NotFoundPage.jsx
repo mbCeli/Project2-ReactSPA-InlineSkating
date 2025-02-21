@@ -8,7 +8,6 @@ export default function NotFoundPage() {
     <Stack
       sx={{
         marginTop: "9.2vh",
-        border: "2px solid red",
         width: "90vw",
         height: "90vh",
       }}
