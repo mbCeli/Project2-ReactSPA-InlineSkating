@@ -1,6 +1,6 @@
 import { Box, Link, Stack, Typography } from "@mui/material";
 
-import linkedInLogo from "../assets/images/LI-logo.png";
+import linkedInLogo from "../assets/images/LI-Logo.png";
 import gitHubLogo from "../assets/images/github-mark.png";
 
 import gifURL from "../assets/images/pretty-cute.gif";
