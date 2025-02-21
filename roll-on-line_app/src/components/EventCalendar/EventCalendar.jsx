@@ -215,10 +215,10 @@ const handleEditEvent = (event) => {
         minWidth: "90vmin",
         aspectRatio: "3 / 2",
         height: "78%",
-        backgroundColor: "pink",
+        backgroundColor: "#254159",
         padding: "3rem",
         borderRadius: "5rem",
-        border: "0.3rem solid grey",
+        border: "0.3rem solidrgb(31, 48, 63)",
         display: "flex",
         flexDirection: "row",
         columnGap: "2rem",
@@ -232,6 +232,8 @@ const handleEditEvent = (event) => {
           boxShadow: 3,
           borderRadius: "7rem",
           padding: "2.5rem",
+          marginTop: "3rem",
+          backgroundColor: "#E3D3B9",
         }}
       >
         <Typography
@@ -240,6 +242,7 @@ const handleEditEvent = (event) => {
           sx={{
             fontSize: "clamp(1.9rem, 0.8cqi, 2rem)",
             fontFamily: "Oswald",
+            color: "#8C4830",
           }}
         >
           Event Calendar
@@ -278,12 +281,26 @@ const handleEditEvent = (event) => {
             }}
           >
             <Button onClick={preMonth}>
-              <Avatar sx={{ width: 25, height: 25 }}>
+              <Avatar
+                sx={{
+                  width: 25,
+                  height: 25,
+                  backgroundColor: "#49798C",
+                  color: "#FEF9F3",
+                }}
+              >
                 <NavigateBeforeIcon />
               </Avatar>
             </Button>
             <Button onClick={nextMonth}>
-              <Avatar sx={{ width: 25, height: 25 }}>
+              <Avatar
+                sx={{
+                  width: 25,
+                  height: 25,
+                  backgroundColor: "#49798C",
+                  color: "#FEF9F3",
+                }}
+              >
                 <NavigateNextIcon />
               </Avatar>
             </Button>
@@ -349,7 +366,7 @@ const handleEditEvent = (event) => {
               position: "absolute",
               top: "37%",
               left: "5rem",
-              backgroundColor: "#c97",
+              backgroundColor: "#E3D3B9",
               width: "clamp(26rem, 21cqi, 45rem)",
               aspectRatio: "10 / 8",
               borderRadius: "2rem",
@@ -373,14 +390,14 @@ const handleEditEvent = (event) => {
                 className="event-popup-time"
                 sx={{
                   width: "clamp(4rem, 4cqi, 7rem)",
-                  backgroundColor: "primary.main",
+                  backgroundColor: "#49798C",
                   color: "white",
                   fontFamily: "Oswald",
                   fontSize: "clamp(1rem, 1.2cqi, 2.2rem)",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  boxShadow: "0 0 1.5rem 0.5rem rgba(0, 163, 255, 0.2)",
+                  boxShadow: "0 0 1.5rem 0.2rem rgba(74, 189, 255, 0.4)",
                   letterSpacing: "0.1rem",
                 }}
               >
@@ -411,6 +428,7 @@ const handleEditEvent = (event) => {
             </Box>
             <TextField
               id="outlined-multiline-static"
+              color="#103A50"
               placeholder="Event Title (Maximum 30 chracaters)"
               variant="outlined"
               focused
@@ -423,6 +441,7 @@ const handleEditEvent = (event) => {
             />
             <TextField
               id="outlined-multiline-static"
+              color="#103A50"
               multiline
               rows={5}
               placeholder="Enter Event details (Maximum 100 chracaters)"
@@ -446,6 +465,7 @@ const handleEditEvent = (event) => {
                 letterSpacing: "0.1rem",
                 border: "none",
                 boxShadow: "0 0 1.5rem 1rem rgba(239, 144, 17, 0.2)",
+                backgroundColor: "#49798C",
               }}
               onClick={editingEvent ? handleUpdateEvent : handleAddEvent} // Conditional logic to either update or add event
             >
@@ -457,6 +477,7 @@ const handleEditEvent = (event) => {
                 position: "absolute",
                 top: "1rem",
                 right: "1rem",
+                color: "#49798C",
               }}
               onClick={() => setShowEventPopup(false)}
             >
@@ -473,14 +494,14 @@ const handleEditEvent = (event) => {
                 sx={{
                   width: "100%",
                   height: "7rem",
-                  backgroundColor: "primary.main",
+                  backgroundColor: "#FEF9F3",
                   padding: "1rem",
                   borderRadius: "2rem",
                   display: "flex",
                   alignItems: "center",
                   marginBottom: "1rem",
                   position: "relative",
-                  columnGap: "2rem",
+                  columnGap: "1rem",
                 }}
               >
                 <Box
@@ -489,27 +510,25 @@ const handleEditEvent = (event) => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    width: "25%",
-                    borderRight: "0.1rem solid rgba(255, 255, 255, 0.5)",
+                    width: "100px",
+                    borderRight: "0.1rem solid #103A50",
                   }}
                 >
                   <Box
                     /* className="event-date" */
                     sx={{
                       fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
-                      color: "white",
+                      color: "#103A50",
+                      width: "100px",
                     }}
                   >
                     {`${event.date}`}
-                    {/*      {`${
-                  monthsOfYear[event.date.getMonth()]
-                } ${event.date.getDate()}, ${event.date.getFullYear()}`} */}
                   </Box>
                   <Box
                     /* className="event-time" */
                     sx={{
                       fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
-                      color: "white",
+                      color: "#103A50",
                     }}
                   >
                     {event.time}
@@ -519,7 +538,8 @@ const handleEditEvent = (event) => {
                   /* className="event-name" */
                   sx={{
                     fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
-                    color: "white",
+                    color: "#103A50",
+                    width: "130px",
                   }}
                 >
                   {event.name}
@@ -529,7 +549,7 @@ const handleEditEvent = (event) => {
                   sx={{
                     fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
                     lineHeight: "2rem",
-                    width: "75%",
+                    width: "400px",
                     padding: "0 3rem 0 1rem",
                     overflowWrap: "break-word",
                   }}
@@ -542,7 +562,7 @@ const handleEditEvent = (event) => {
                     position: "absolute",
                     top: "20%",
                     transform: "translateX(-50%)",
-                    right: "0.1rem",
+                    right: "0rem",
                     display: "flex",
                     flexDirection: "column",
                     rowGap: "1rem",
@@ -552,7 +572,13 @@ const handleEditEvent = (event) => {
                     className="edit-event-button"
                     onClick={() => handleEditEvent(event)}
                   >
-                    <Avatar sx={{ width: 30, height: 30 }}>
+                    <Avatar
+                      sx={{
+                        width: 30,
+                        height: 30,
+                        backgroundColor: "#8C4830",
+                      }}
+                    >
                       <BorderColorIcon />
                     </Avatar>
                   </Button>
@@ -560,7 +586,9 @@ const handleEditEvent = (event) => {
                     className="delete-event-button"
                     onClick={() => handleDeleteEvent(event.id)}
                   >
-                    <Avatar sx={{ width: 30, height: 30 }}>
+                    <Avatar
+                      sx={{ width: 30, height: 30, backgroundColor: "#8C4830" }}
+                    >
                       <DeleteIcon />
                     </Avatar>
                   </Button>

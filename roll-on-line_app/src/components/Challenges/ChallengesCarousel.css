@@ -23,13 +23,6 @@
   transition: transform 0.3s ease-in-out !important; 
 }
 
-.swiper-slide img {
-  width: 37rem;
-  height: 42rem;
-  border-radius: 2rem;
-  object-fit: cover;
-}
-
 .slider-controler {
   position: absolute;
   bottom: 0.5rem;
@@ -49,9 +42,9 @@
 .slider-controler .slider-arrow {
   width: 30px;
   height: 30px;
-  color: #4b15c7;
+  color: #FDDBBF;
   border-radius: 50%;
-  background-color: aliceblue;
+  background-color: #254159;
 }
 
 .slider-controler .slider-arrow::after {
@@ -69,7 +62,7 @@
 }
 
 .swiper-pagination .swiper-pagination-bullet-active {
-  background: black;
+  background: #254159;
 }
 
  /* To remove the 80px marginTop from the console. */

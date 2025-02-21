@@ -32,9 +32,9 @@
 }
 
 .current-day{
-    background-color: aqua;
+    background-color: rgb(173, 104, 79);
     border-radius: 50%;
-    box-shadow: 0 0 1.5rem 0.8rem rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 1.5rem 0.8rem rgba(207, 145, 87, 0.5);
     width: 3rem;
     height: 3rem;
     display: flex;
@@ -48,8 +48,8 @@
 input{
     background-color: transparent;
     border: none;
-    border-top: 0.2rem solid rgb(59, 118, 228);
-    border-bottom: 0.2rem solid rgb(59, 118, 228);
+    border-top: 0.1rem solid #103A50;
+    border-bottom: 0.1rem solid #103A50;
     color: white;
     width: clamp(4rem, 4cqi, 7rem );
     height: 2rem;

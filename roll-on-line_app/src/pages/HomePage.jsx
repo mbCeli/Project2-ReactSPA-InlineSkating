@@ -4,6 +4,8 @@ import ProfileDashboard from "../components/Profile/ProfileDashboard";
 import ChallengesCarousel from "../components/Challenges/ChallengesCarousel";
 import RecentActivities from "../components/Activities/RecentActivities";
 
+
+
 export default function HomePage() {
   return (
     <Stack
@@ -11,7 +13,6 @@ export default function HomePage() {
       sx={{
         display: "flex",
         flexDirection: "row",
-        border: "2px solid red",
         width: "90vw",
         height: "90vh",
         marginTop: "9.2vh",

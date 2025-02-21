@@ -9,6 +9,7 @@ import "./ProfileDashboard.css";
 import cover from "../../assets/images/c1e54c33581e520e3346e503c67c4678.jpg";
 
 
+
 export default function ProfileDashboard() {
   const [profile, setProfile] = useState({});
   const [stats, setStats] = useState({});
@@ -65,6 +66,7 @@ export default function ProfileDashboard() {
 
   return (
     <Box
+    className="profile-dashboard"
       aria-label="left-side"
       borderRadius={15}
       sx={{

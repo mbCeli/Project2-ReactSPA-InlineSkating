@@ -90,16 +90,31 @@ export default function ChallengesCarousel() {
                     paddingTop: "5vh",
                   }}
                 >
-                  <Typography variant="h5">{challenge.name}</Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      color: "#8C4830",
+                      textShadow: "1px 1px 2pxrgb(167, 92, 65)",
+                    }}
+                  >
+                    {challenge.name}
+                  </Typography>
                   <br />
                   <Typography variant="h6">{challenge.goal_type}</Typography>
-              
+
                   <Typography>{challenge.goal_value}</Typography>
                   <br />
                   <Typography> Start Date: {challenge.start_date}</Typography>
                   <Typography>End Date: {challenge.end_date}</Typography>
                   <br />
-                  <Typography> {challenge.status}</Typography>
+                  <Typography
+                    sx={{
+                      color: "#FEF9F3",
+                    }}
+                  >
+                    {" "}
+                    {challenge.status}
+                  </Typography>
                 </Box>
               </SwiperSlide>
             );

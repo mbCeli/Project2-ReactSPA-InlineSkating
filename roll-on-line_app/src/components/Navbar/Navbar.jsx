@@ -10,7 +10,6 @@ import {
   ListItemIcon,
   ListItemAvatar,
   Avatar,
-  SvgIcon,
   Typography,
 } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
@@ -35,9 +34,17 @@ export default function ClippedDrawer() {
         elevation={0}
       >
         <Toolbar>
-          <SvgIcon>
-            <img src={RollOnLineIcon} />
-          </SvgIcon>
+          <Box
+            sx={{
+              backgroundImage: `url(${RollOnLineIcon})`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "contain",
+              width: 40,
+              height: 40,
+              marginRight: "1rem",
+              color: "white",
+            }}
+          ></Box>
           <Typography variant="h6" component="div">
             RollOnLine
           </Typography>
@@ -96,22 +103,6 @@ export default function ClippedDrawer() {
               </Link>
             </ListItem>
             <ListItem sx={{ marginBottom: 4, width: 165 }}>
-              <Link component={RouterLink} to="/skate_info">
-                <ListItemButton sx={{ width: 165 }}>
-                  <ListItemIcon>
-                    <ListItemAvatar>
-                      <Avatar>
-                        <HomeIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                  </ListItemIcon>
-                  <Typography variant="body1" sx={{ color: "white" }}>
-                    History
-                  </Typography>
-                </ListItemButton>
-              </Link>
-            </ListItem>
-            <ListItem sx={{ marginBottom: 4, width: 165 }}>
               <Link component={RouterLink} to="/about">
                 <ListItemButton sx={{ width: 165 }}>
                   <ListItemIcon>
@@ -127,7 +118,7 @@ export default function ClippedDrawer() {
                 </ListItemButton>
               </Link>
             </ListItem>
-            <ListItem sx={{ width: 165 }}>
+            <ListItem sx={{ width: 165, marginTop:"25rem" }}>
               <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>

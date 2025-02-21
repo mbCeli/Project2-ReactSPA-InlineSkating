@@ -202,6 +202,7 @@ export default function RecentActivities() {
           fontSize: "1.5rem",
           maxWidth: "40vw",
           height: "auto",
+          color: "#FEF9F3",
         }}
       >
         Recent Activity
@@ -212,7 +213,7 @@ export default function RecentActivities() {
         sx={{
           width: "50vw",
           height: "39vh",
-          backgroundColor: "primary.light",
+          backgroundColor: "#254159",
           margin: 0,
           paddingTop: "4vh",
         }}
@@ -223,6 +224,7 @@ export default function RecentActivities() {
             onClick={() => handleOpenModal(false)}
             variant="contained"
             className="add-button"
+            sx={{ backgroundColor: "#8C4830", color: "#FECC97" }}
           >
             <SvgIcon>
               <AddIcon fontSize="small" />
@@ -243,41 +245,76 @@ export default function RecentActivities() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell align="center" onClick={() => handleSort("date")}>
+                <TableCell
+                  sx={{ color: "#FECC97" }}
+                  align="center"
+                  onClick={() => handleSort("date")}
+                >
                   <TableSortLabel
                     active={orderBy === "date"}
                     direction={orderBy === "date" ? order : "asc"}
+                    sx={{ color: "#FECC97" }}
                   >
                     Date
                   </TableSortLabel>
                 </TableCell>
-                <TableCell align="center">Place / Route</TableCell>
-                <TableCell align="center">Duration</TableCell>
-                <TableCell align="center">Distance</TableCell>
-                <TableCell align="center">Calories</TableCell>
-                <TableCell align="center">Comments</TableCell>
-                <TableCell align="center">Edit / Delete</TableCell>
+                <TableCell align="center" sx={{ color: "#FECC97" }}>
+                  Place / Route
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#FECC97" }}>
+                  Duration
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#FECC97" }}>
+                  Distance
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#FECC97" }}>
+                  Calories
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#FECC97" }}>
+                  Comments
+                </TableCell>
+                <TableCell align="center" sx={{ color: "#FECC97" }}>
+                  Edit / Delete
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {paginatedActivities.map((activity) => (
                 <TableRow key={activity.id}>
-                  <TableCell align="center" sx={{ maxWidth: "70px" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ maxWidth: "70px", color: "#FEF9F3" }}
+                  >
                     {activity.date}
                   </TableCell>
-                  <TableCell align="center" sx={{ maxWidth: "70px" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ maxWidth: "70px", color: "#FEF9F3" }}
+                  >
                     {activity.route_name}
                   </TableCell>
-                  <TableCell align="center" sx={{ maxWidth: "20px" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ maxWidth: "20px", color: "#FEF9F3" }}
+                  >
                     {activity.time} min
                   </TableCell>
-                  <TableCell align="center" sx={{ maxWidth: "20px" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ maxWidth: "20px", color: "#FEF9F3" }}
+                  >
                     {activity.distance} km
                   </TableCell>
-                  <TableCell align="center" sx={{ maxWidth: "20px" }}>
+                  <TableCell
+                    align="center"
+                    sx={{ maxWidth: "20px", color: "#FEF9F3" }}
+                  >
                     {activity.calories_burned}
                   </TableCell>
-                  <TableCell align="left" sx={{ maxWidth: "500px" }}>
+                  <TableCell
+                    align="left"
+                    sx={{ maxWidth: "500px", color: "#FEF9F3" }}
+                  >
                     {activity.comments}
                   </TableCell>
                   <TableCell sx={{ maxWidth: "10px" }}>
@@ -285,6 +322,11 @@ export default function RecentActivities() {
                       onClick={() => handleOpenModal(true, activity)}
                       variant="text"
                       size="small"
+                      sx={{
+                        backgroundColor: "#8C4830",
+                        color: "#FECC97",
+                        marginBottom: "0.1rem",
+                      }}
                     >
                       Edit...
                       <EditIcon fontSize="small" />
@@ -294,6 +336,7 @@ export default function RecentActivities() {
                       onClick={() => handleDelete(activity.id)}
                       variant="text"
                       size="small"
+                      sx={{ backgroundColor: "#8C4830", color: "#FECC97" }}
                     >
                       Delete
                       <DeleteIcon fontSize="small" />
@@ -305,6 +348,7 @@ export default function RecentActivities() {
           </Table>
         </TableContainer>
         <TablePagination
+          sx={{ color: "#FECC97" }}
           rowsPerPageOptions={[2, 4, 8]}
           component="div"
           count={sortedActivities.length}
