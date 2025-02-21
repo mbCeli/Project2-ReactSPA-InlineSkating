@@ -82,6 +82,7 @@ export default function EventCalendar() {
       setShowEventPopup(true);
       setEventTime({ hours: "00", minutes: "00" });
       setEventText("");
+       setEventName("");
       setEditingEvent(null);
     }
   };
@@ -148,7 +149,7 @@ export default function EventCalendar() {
   //PUT
   const handleUpdateEvent = () => {
 
-if (!editingEvent) return; // Don't proceed if no event is being edited
+if (!editingEvent) return;
 
 const updatedEvent = {
   id: editingEvent.id,
@@ -161,7 +162,6 @@ const updatedEvent = {
 axios
   .put(`${baseURL}/events/${editingEvent.id}`, updatedEvent)
   .then(() => {
-    // Update the local events list to reflect the changes
     const updatedEvents = events.map((event) =>
       event.id === editingEvent.id ? updatedEvent : event
     );
