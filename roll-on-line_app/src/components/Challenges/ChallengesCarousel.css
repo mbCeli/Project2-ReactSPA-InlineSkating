@@ -32,7 +32,7 @@
 
 .slider-controler {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 0.5rem;
   left: 35%;
   display: flex;
   align-items: center;
@@ -61,7 +61,7 @@
 .swiper-pagination {
   position: absolute;
   left: 4%;
-  bottom: 1.5rem !important;
+  bottom: 0.5rem !important;
 }
 
 .swiper-pagination .swiper-pagination-bullet {

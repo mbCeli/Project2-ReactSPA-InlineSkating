@@ -27,7 +27,7 @@ export default function NotFoundPage() {
           height: "100%",
         }}
       >
-        <Typography variant="h1">404 Error</Typography>
+        <Typography variant="h1" sx={{ color: "darkred", fontSize: "7rem" }}>404 Error</Typography>
         <Typography variant="h3">Page not found</Typography>
         <SentimentVeryDissatisfiedIcon
           sx={{ fontSize: 100, marginTop: "3rem" }}

@@ -6,6 +6,8 @@ import axios from "axios";
 
 import { baseURL } from "../../App";
 import "./ProfileDashboard.css";
+import cover from "../../assets/images/c1e54c33581e520e3346e503c67c4678.jpg";
+
 
 export default function ProfileDashboard() {
   const [profile, setProfile] = useState({});
@@ -68,37 +70,82 @@ export default function ProfileDashboard() {
       sx={{
         marginLeft: "1vw",
         marginRight: "2vw",
-        marginTop: "1vh",
-        backgroundColor: "secondary.light",
+        marginTop: "5vh",
         width: "35vw",
-        height: "88vh",
+        height: "80vh",
+        backgroundImage: `url(${cover})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        boxShadow:
+          "0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
       }}
     >
       {/* Personal Info */}
       <Grid2
         container
-        spacing={4}
+        spacing={0.5}
         columns={12}
         sx={{
-          marginTop: "8vh",
-
+          marginTop: "3vh",
           justifyContent: "center",
           textAlign: "center",
+          color: "#254159",
         }}
       >
         <Grid2 size={12} m={1} sx={{ textAlign: "center" }}>
-          <img src={profile.image} alt="user picture" />
+          <img
+            src={profile.image}
+            alt="user picture"
+            className="profile-image"
+          />
         </Grid2>
-        <Grid2 size={12} m={1} component="h3" sx={{ textAlign: "center" }}>
+        <Grid2
+          size={12}
+          m={1}
+          component="h3"
+          sx={{
+            textAlign: "center",
+            backgroundColor: "#D9C8B4",
+            opacity: 0.7,
+            borderRadius: "12px",
+          }}
+        >
           {profile.name}
         </Grid2>
-        <Grid2 size={3} m={1} sx={{ textAlign: "center" }}>
+        <Grid2
+          size={3}
+          m={1}
+          sx={{
+            textAlign: "center",
+            backgroundColor: "#D9C8B4",
+            opacity: 0.7,
+            borderRadius: "12px",
+          }}
+        >
           {profile.age}
         </Grid2>
-        <Grid2 size={3} m={1} sx={{ textAlign: "center" }}>
+        <Grid2
+          size={3}
+          m={1}
+          sx={{
+            textAlign: "center",
+            backgroundColor: "#D9C8B4",
+            opacity: 0.7,
+            borderRadius: "12px",
+          }}
+        >
           {profile.location}
         </Grid2>
-        <Grid2 size={3} m={1} sx={{ textAlign: "center" }}>
+        <Grid2
+          size={3}
+          m={1}
+          sx={{
+            textAlign: "center",
+            backgroundColor: "#D9C8B4",
+            opacity: 0.7,
+            borderRadius: "12px",
+          }}
+        >
           {profile.skating_since}
         </Grid2>
 
@@ -106,11 +153,21 @@ export default function ProfileDashboard() {
         <Grid2
           container
           size={12}
-          spacing={1}
+          spacing={0.5}
           m={1}
           sx={{ textAlign: "center", justifyContent: "center" }}
         >
-          <Grid2 size={12} m={2} component="h3">
+          <Grid2
+            size={12}
+            m={2}
+            component="h3"
+            sx={{
+              textAlign: "center",
+              backgroundColor: "#D9C8B4",
+              opacity: 0.7,
+              borderRadius: "12px",
+            }}
+          >
             My Equipment
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
@@ -120,7 +177,11 @@ export default function ProfileDashboard() {
             <br />
             Type - {equipment?.skates?.type}
             <br />
-            <img src={equipment?.skates?.image} alt="skates pictures" />
+            <img
+              src={equipment?.skates?.image}
+              alt="skates pictures"
+              className="skates-image"
+            />
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Helmet </span>
@@ -129,7 +190,11 @@ export default function ProfileDashboard() {
             <br />
             Model - {equipment?.helmet?.model}
             <br />
-            <img src={equipment?.helmet?.image} alt="helmet pictures" />
+            <img
+              src={equipment?.helmet?.image}
+              alt="helmet pictures"
+              className="helmet-image"
+            />
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Knee Pads</span>
@@ -138,7 +203,11 @@ export default function ProfileDashboard() {
             <br />
             Model - {equipment?.knee_pads?.model}
             <br />
-            <img src={equipment?.knee_pads?.image} alt="knee_pads pictures" />
+            <img
+              src={equipment?.knee_pads?.image}
+              alt="knee_pads pictures"
+              className="knee-pads-image"
+            />
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Wrist Guards</span>
@@ -150,6 +219,7 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.wrist_protectors?.image}
               alt="wrist_protectors pictures"
+              className="wrist-guards-image"
             />
           </Grid2>
         </Grid2>
@@ -159,11 +229,21 @@ export default function ProfileDashboard() {
       <Grid2
         container
         size={12}
-        spacing={1}
+        spacing={0.5}
         m={1}
-        sx={{ textAlign: "center", justifyContent: "center" }}
+        sx={{ textAlign: "center", justifyContent: "center", color: "#254159" }}
       >
-        <Grid2 size={12} m={2} component="h3">
+        <Grid2
+          size={12}
+          m={2}
+          component="h3"
+          sx={{
+            textAlign: "center",
+            backgroundColor: "#D9C8B4",
+            opacity: 0.7,
+            borderRadius: "12px",
+          }}
+        >
           So Far
         </Grid2>
         <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>

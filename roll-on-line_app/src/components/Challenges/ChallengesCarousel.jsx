@@ -1,4 +1,4 @@
-import { Box, Stack, SvgIcon } from "@mui/material";
+import { Box, Stack, SvgIcon, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
@@ -51,7 +51,6 @@ export default function ChallengesCarousel() {
         sx={{
           width: "50vw",
           height: "40vh",
-          backgroundColor: "primary.light",
           display: "flex",
           justifyContent: "center",
         }}
@@ -87,21 +86,20 @@ export default function ChallengesCarousel() {
                     textAlign: "center",
                     width: "100%",
                     height: "80%",
-                    backgroundColor: "secondary.light",
+                    backgroundColor: "#F2C094",
                     paddingTop: "5vh",
                   }}
                 >
-                  {challenge.name}
+                  <Typography variant="h5">{challenge.name}</Typography>
                   <br />
-                  {challenge.goal_type}
+                  <Typography variant="h6">{challenge.goal_type}</Typography>
+              
+                  <Typography>{challenge.goal_value}</Typography>
                   <br />
-                  {challenge.goal_value}
+                  <Typography> Start Date: {challenge.start_date}</Typography>
+                  <Typography>End Date: {challenge.end_date}</Typography>
                   <br />
-                  {challenge.start_date}
-                  <br />
-                  {challenge.end_date}
-                  <br />
-                  {challenge.status}
+                  <Typography> {challenge.status}</Typography>
                 </Box>
               </SwiperSlide>
             );

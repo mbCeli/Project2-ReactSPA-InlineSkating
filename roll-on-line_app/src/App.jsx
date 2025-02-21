@@ -1,12 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
 
-
 import './App.css'
 
 import Navbar from './components/Navbar/Navbar'
 import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
-import HistoryPage from './pages/HistoryPage';
 import AboutPage from './pages/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { ThemeProvider, createTheme } from '@mui/material';
@@ -27,7 +25,6 @@ const theme = createTheme({
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/events" element={<EventsPage />} />
-          <Route path="/skate_info" element={<HistoryPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

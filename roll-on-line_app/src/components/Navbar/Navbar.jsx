@@ -30,6 +30,7 @@ export default function ClippedDrawer() {
           zIndex: (theme) => theme.zIndex.drawer + 1,
           display: "flex",
           flexDirection: "row-reverse",
+          backgroundColor: "#49798C",
         }}
         elevation={0}
       >
@@ -49,9 +50,7 @@ export default function ClippedDrawer() {
           display: { xs: "none", md: "flex" },
           "& .MuiDrawer-paper": {
             width: 185,
-            boxSizing: "border-box",
-            border: "1px solid black",
-            backgroundColor: "primary.main",
+            backgroundColor: "#49798C",
           },
         }}
       >
