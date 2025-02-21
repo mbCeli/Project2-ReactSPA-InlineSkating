@@ -14,7 +14,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import "./EventCalendar.css";
 
-import { useState } from "react";
+import { baseURL } from "../../App";
+
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function EventCalendar() {
   const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
@@ -39,6 +42,18 @@ export default function EventCalendar() {
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [selectedDate, setSelectedDate] = useState(currentDate);
   const [showEventPopup, setShowEventPopup] = useState(false);
+  const [events, setEvents] = useState([]);
+  const [eventTime, setEventTime] = useState({ hours: "00", minutes: "00" });
+  const [eventText, setEventText] = useState("");
+  const [eventName, setEventName] = useState("");
+  const [editingEvent, setEditingEvent] = useState(null);
+  const [newEventData, setNewEventData] = useState({
+    id: "",
+    name: "",
+    date: "",
+    time: "",
+    text: "",
+  });
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate(); //this create an object that returns the number of days in the month
   let firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay(); // Get the day of the week (0=Sun, 1=Mon, ..., 6=Sat)
@@ -47,7 +62,6 @@ export default function EventCalendar() {
   } else {
     firstDayOfMonth--; // Adjust other days by subtracting 1 to align with the corrected daysOfWeek array
   }
-  console.log(currentMonth, daysInMonth, firstDayOfMonth);
 
   const preMonth = () => {
     setCurrentMonth((preMonth) => (preMonth === 0 ? 11 : preMonth - 1));
@@ -63,11 +77,136 @@ export default function EventCalendar() {
     const clickedDate = new Date(currentYear, currentMonth, day);
     const today = new Date();
 
-    if (clickedDate >= today) {
+    if (clickedDate >= today || isSameDay(clickedDate, today)) {
       setSelectedDate(clickedDate);
       setShowEventPopup(true);
+      setEventTime({ hours: "00", minutes: "00" });
+      setEventText("");
+      setEditingEvent(null);
     }
-  }
+  };
+
+  const isSameDay = (date1, date2) => {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
+  };
+
+  //GET
+  const getEvents = () => {
+    axios
+      .get(`${baseURL}/events`)
+      .then((response) => {
+        setEvents(response.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getEvents();
+  }, []);
+
+  //POST
+  const handleAddEvent = (e) => {
+    e.preventDefault();
+
+    const newEvent = { ...newEventData };
+
+    const requestBody = {
+      id: newEvent.id,
+      name: (newEvent.name = eventName),
+      date: (newEvent.date = `${selectedDate.getFullYear()}-${
+        selectedDate.getMonth() + 1
+      }-${selectedDate.getDate()}`),
+      time: (newEvent.time = `${eventTime.hours.padStart(2, "0")}:${eventTime.minutes.padStart(2, "0")}`),
+      text: (newEvent.text = eventText),
+    };
+
+    axios
+      .post(`${baseURL}/events`, requestBody)
+      .then((response) => {
+        setEvents((prevEvents) => [...prevEvents, response.data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    setNewEventData({
+      name: "",
+      date: "",
+      time: "",
+      text: "",
+    });
+
+    setEventText("");
+    setEventTime({ hours: "00", minutes: "00" });
+    setShowEventPopup(false);
+  };
+
+  //PUT
+  const handleUpdateEvent = () => {
+
+if (!editingEvent) return; // Don't proceed if no event is being edited
+
+const updatedEvent = {
+  id: editingEvent.id,
+  name: eventName,
+  date: selectedDate.toISOString().split("T")[0], // Format to 'YYYY-MM-DD'
+  time: `${eventTime.hours}:${eventTime.minutes}`,
+  text: eventText,
+};
+
+axios
+  .put(`${baseURL}/events/${editingEvent.id}`, updatedEvent)
+  .then(() => {
+    // Update the local events list to reflect the changes
+    const updatedEvents = events.map((event) =>
+      event.id === editingEvent.id ? updatedEvent : event
+    );
+    updatedEvents.sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by date
+    setEvents(updatedEvents);
+
+    // Reset state and close the popup
+    setShowEventPopup(false);
+    setEditingEvent(null);
+    setEventText("");
+    setEventTime({ hours: "00", minutes: "00" });
+    setEventName("");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+  };
+
+const handleEditEvent = (event) => {
+  // Set the editingEvent state to the selected event's data
+  setEditingEvent(event);
+
+  // Set the state of form inputs to the event's data
+  setEventName(event.name);
+  setEventText(event.text);
+  const eventTime = event.time.split(":"); // Assuming time is stored as 'HH:mm'
+  setEventTime({ hours: eventTime[0], minutes: eventTime[1] });
+
+  // Open the event popup for editing
+  setShowEventPopup(true);
+};
+
+
+  //DELETE
+  const handleDeleteEvent = (eventId) => {
+    axios
+      .delete(`${baseURL}/events/${eventId}`)
+      .then(() => {
+        const updatedEvents = events.filter((event) => event.id !== eventId);
+        setEvents(updatedEvents);
+      })
+      .catch((error) => {
+        console.log(error); 
+      })
+  };
 
   return (
     <Stack
@@ -75,7 +214,7 @@ export default function EventCalendar() {
         width: "90%",
         minWidth: "90vmin",
         aspectRatio: "3 / 2",
-        height: "80%",
+        height: "78%",
         backgroundColor: "pink",
         padding: "3rem",
         borderRadius: "5rem",
@@ -203,178 +342,232 @@ export default function EventCalendar() {
           padding: "3rem 0",
         }}
       >
-        <Box
-          /* className="event-popup" */
-          sx={{
-            position: "absolute",
-            top: "39%",
-            left: "5rem",
-            backgroundColor: "#c97",
-            width: "clamp(26rem, 21cqi, 45rem)",
-            aspectRatio: "10 / 8",
-            borderRadius: "2rem",
-            boxShadow: "0 1rem 3rem rgba(0, 0, 0, 0.3)",
-            display: "none" /* Hide or show */,
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            rowGap: "2rem",
-            padding: "2rem",
-          }}
-        >
+        {showEventPopup && (
           <Box
-            /* className="time-input" */
-            sx={{
-              display: "flex",
-              columnGap: "1rem",
-            }}
-          >
-            <Box
-              className="event-popup-time"
-              sx={{
-                width: "clamp(4rem, 4cqi, 7rem)",
-                backgroundColor: "primary.main",
-                color: "white",
-                fontFamily: "Oswald",
-                fontSize: "clamp(1rem, 1.2cqi, 2.2rem)",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                boxShadow: "0 0 1.5rem 0.5rem rgba(0, 163, 255, 0.2)",
-                letterSpacing: "0.1rem",
-              }}
-            >
-              Time
-            </Box>
-            <input
-              type="number"
-              name="hours"
-              min={0}
-              max={24}
-              className="hours"
-            />
-            <input
-              type="number"
-              name="minutes"
-              min={0}
-              max={60}
-              className="minutes"
-            />
-          </Box>
-          <TextField
-            id="outlined-multiline-static"
-            multiline
-            rows={5}
-            placeholder="Enter Event details (Maximum 100 chracaters)"
-            variant="outlined"
-            focused
-          />
-
-          <Button
-            variant="contained" /* className="event-popup-button" */
-            sx={{
-              width: "clamp(13rem, 13cqi, 25rem)",
-              height: "3rem",
-              fontFamily: "Oswald",
-              fontSize: "clamp(1.3rem, 1.3cqi, 2.2rem)",
-              letterSpacing: "0.1rem",
-              border: "none",
-              boxShadow: "0 0 1.5rem 1rem rgba(239, 144, 17, 0.2)",
-            }}
-          >
-            Add Event
-          </Button>
-          <Button
-            className="close-event-popup"
+            /* className="event-popup" */
             sx={{
               position: "absolute",
-              top: "1rem",
-              right: "1rem",
-            }}
-          >
-            <CloseIcon />
-          </Button>
-        </Box>
-        <Box
-          /*  className="event" */
-          sx={{
-            width: "100%",
-            height: "7rem",
-            backgroundColor: "primary.main",
-            padding: "1rem",
-            borderRadius: "2rem",
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1rem",
-            position: "relative",
-            columnGap: "2rem",
-          }}
-        >
-          <Box
-            /* className="event-date-wrapper" */
-            sx={{
+              top: "37%",
+              left: "5rem",
+              backgroundColor: "#c97",
+              width: "clamp(26rem, 21cqi, 45rem)",
+              aspectRatio: "10 / 8",
+              borderRadius: "2rem",
+              boxShadow: "0 1rem 3rem rgba(0, 0, 0, 0.3)",
               display: "flex",
               flexDirection: "column",
+              justifyContent: "center",
               alignItems: "center",
-              width: "25%",
-              borderRight: "0.1rem solid rgba(255, 255, 255, 0.5)",
+              rowGap: "2rem",
+              padding: "2rem",
             }}
           >
             <Box
-              /* className="event-date" */
+              /* className="time-input" */
               sx={{
-                fontSize: "clamp(0.8rem, 0.2cqi, 0.5rem)",
-                color: "white",
+                display: "flex",
+                columnGap: "1rem",
               }}
             >
-              February 20, 2025
+              <Box
+                className="event-popup-time"
+                sx={{
+                  width: "clamp(4rem, 4cqi, 7rem)",
+                  backgroundColor: "primary.main",
+                  color: "white",
+                  fontFamily: "Oswald",
+                  fontSize: "clamp(1rem, 1.2cqi, 2.2rem)",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxShadow: "0 0 1.5rem 0.5rem rgba(0, 163, 255, 0.2)",
+                  letterSpacing: "0.1rem",
+                }}
+              >
+                Time
+              </Box>
+              <input
+                type="number"
+                name="hours"
+                min={0}
+                max={24}
+                className="hours"
+                value={eventTime.hours}
+                onChange={(e) =>
+                  setEventTime({ ...eventTime, hours: e.target.value })
+                }
+              />
+              <input
+                type="number"
+                name="minutes"
+                min={0}
+                max={60}
+                className="minutes"
+                value={eventTime.minutes}
+                onChange={(e) =>
+                  setEventTime({ ...eventTime, minutes: e.target.value })
+                }
+              />
             </Box>
-            <Box
-              /* className="event-time" */
-              sx={{
-                fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
-                color: "white",
+            <TextField
+              id="outlined-multiline-static"
+              placeholder="Event Title (Maximum 30 chracaters)"
+              variant="outlined"
+              focused
+              value={eventName}
+              onChange={(e) => {
+                if (e.target.value.length <= 100) {
+                  setEventName(e.target.value);
+                }
               }}
+            />
+            <TextField
+              id="outlined-multiline-static"
+              multiline
+              rows={5}
+              placeholder="Enter Event details (Maximum 100 chracaters)"
+              variant="outlined"
+              focused
+              value={eventText}
+              onChange={(e) => {
+                if (e.target.value.length <= 100) {
+                  setEventText(e.target.value);
+                }
+              }}
+            />
+
+            <Button
+              variant="contained" /* className="event-popup-button" */
+              sx={{
+                width: "clamp(13rem, 13cqi, 25rem)",
+                height: "3rem",
+                fontFamily: "Oswald",
+                fontSize: "clamp(1.3rem, 1.3cqi, 2.2rem)",
+                letterSpacing: "0.1rem",
+                border: "none",
+                boxShadow: "0 0 1.5rem 1rem rgba(239, 144, 17, 0.2)",
+              }}
+              onClick={editingEvent ? handleUpdateEvent : handleAddEvent} // Conditional logic to either update or add event
             >
-              10:00
-            </Box>
-          </Box>
-          <Box
-            /* className="event-text" */
-            sx={{
-              fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
-              lineHeight: "2rem",
-              width: "75%",
-              padding: "0 3rem 0 1rem",
-              overflowWrap: "break-word",
-            }}
-          >
-            Meeting with John
-          </Box>
-          <Box
-            /* className="event-buttons" */
-            sx={{
-              position: "absolute",
-              top: "20%",
-              transform: "translateX(-50%)",
-              right: "0.1rem",
-              display: "flex",
-              flexDirection: "column",
-              rowGap: "1rem",
-            }}
-          >
-            <Button className="edit-event-button">
-              <Avatar sx={{ width: 30, height: 30 }}>
-                <BorderColorIcon />
-              </Avatar>
+              {editingEvent ? "Update Event" : "Add Event"}
             </Button>
-            <Button className="delete-event-button">
-              <Avatar sx={{ width: 30, height: 30 }}>
-                <DeleteIcon />
-              </Avatar>
+            <Button
+              className="close-event-popup"
+              sx={{
+                position: "absolute",
+                top: "1rem",
+                right: "1rem",
+              }}
+              onClick={() => setShowEventPopup(false)}
+            >
+              <CloseIcon />
             </Button>
           </Box>
-        </Box>
+        )}
+        {events.map(
+          (event, index) =>
+            event.date && (
+              <Box
+                /*  className="event" */
+                key={index}
+                sx={{
+                  width: "100%",
+                  height: "7rem",
+                  backgroundColor: "primary.main",
+                  padding: "1rem",
+                  borderRadius: "2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: "1rem",
+                  position: "relative",
+                  columnGap: "2rem",
+                }}
+              >
+                <Box
+                  /* className="event-date-wrapper" */
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    width: "25%",
+                    borderRight: "0.1rem solid rgba(255, 255, 255, 0.5)",
+                  }}
+                >
+                  <Box
+                    /* className="event-date" */
+                    sx={{
+                      fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
+                      color: "white",
+                    }}
+                  >
+                    {`${event.date}`}
+                    {/*      {`${
+                  monthsOfYear[event.date.getMonth()]
+                } ${event.date.getDate()}, ${event.date.getFullYear()}`} */}
+                  </Box>
+                  <Box
+                    /* className="event-time" */
+                    sx={{
+                      fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
+                      color: "white",
+                    }}
+                  >
+                    {event.time}
+                  </Box>
+                </Box>
+                <Box
+                  /* className="event-name" */
+                  sx={{
+                    fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
+                    color: "white",
+                  }}
+                >
+                  {event.name}
+                </Box>
+                <Box
+                  /* className="event-text" */
+                  sx={{
+                    fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
+                    lineHeight: "2rem",
+                    width: "75%",
+                    padding: "0 3rem 0 1rem",
+                    overflowWrap: "break-word",
+                  }}
+                >
+                  {event.text}
+                </Box>
+                <Box
+                  /* className="event-buttons" */
+                  sx={{
+                    position: "absolute",
+                    top: "20%",
+                    transform: "translateX(-50%)",
+                    right: "0.1rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    rowGap: "1rem",
+                  }}
+                >
+                  <Button
+                    className="edit-event-button"
+                    onClick={() => handleEditEvent(event)}
+                  >
+                    <Avatar sx={{ width: 30, height: 30 }}>
+                      <BorderColorIcon />
+                    </Avatar>
+                  </Button>
+                  <Button
+                    className="delete-event-button"
+                    onClick={() => handleDeleteEvent(event.id)}
+                  >
+                    <Avatar sx={{ width: 30, height: 30 }}>
+                      <DeleteIcon />
+                    </Avatar>
+                  </Button>
+                </Box>
+              </Box>
+            )
+        )}
       </Box>
     </Stack>
   );
