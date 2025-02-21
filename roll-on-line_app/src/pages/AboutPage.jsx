@@ -10,8 +10,8 @@ export default function AboutPage() {
     <Stack
       sx={{
         width: "90vw",
-        height: "90vh",
-        marginTop: "15vh",
+        height: "85vh",
+        marginTop: "12vh",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

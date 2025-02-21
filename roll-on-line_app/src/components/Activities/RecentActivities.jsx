@@ -195,15 +195,17 @@ export default function RecentActivities() {
   };
 
   return (
-    <Stack>
+    <Stack sx={{marginTop: "-1vh",}}>
       <Typography
         sx={{
           alignSelf: "flex-start",
           fontWeight: "bold",
           fontSize: "1.5rem",
           maxWidth: "40vw",
-          height: "auto",
+          height: "0px",
           color: "#FEF9F3",
+          zIndex: 1,
+          marginLeft: "2.5vw",
         }}
       >
         Recent Activity
@@ -213,7 +215,7 @@ export default function RecentActivities() {
         borderRadius={15}
         sx={{
           width: "50vw",
-          height: "39vh",
+          height: "42vh",
           backgroundColor: "#254159",
           margin: 0,
           paddingTop: "4vh",

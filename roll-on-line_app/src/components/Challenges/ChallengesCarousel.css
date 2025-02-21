@@ -54,7 +54,7 @@
 .swiper-pagination {
   position: absolute;
   left: 4%;
-  bottom: 0.5rem !important;
+  bottom: 0.1rem !important;
 }
 
 .swiper-pagination .swiper-pagination-bullet {

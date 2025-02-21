@@ -214,11 +214,11 @@ const handleEditEvent = (event) => {
         width: "90%",
         minWidth: "90vmin",
         aspectRatio: "3 / 2",
-        height: "78%",
+        height: "77%",
         backgroundColor: "#254159",
         padding: "3rem",
         borderRadius: "5rem",
-        border: "0.3rem solidrgb(31, 48, 63)",
+        border: "0.3rem solid rgb(31, 48, 63)",
         display: "flex",
         flexDirection: "row",
         columnGap: "2rem",
@@ -326,6 +326,7 @@ const handleEditEvent = (event) => {
             display: "flex",
             flexWrap: "wrap",
             width: "100%",
+            cursor: "pointer",
           }}
           className="calendar-days"
         >
@@ -464,7 +465,7 @@ const handleEditEvent = (event) => {
                 fontSize: "clamp(1.3rem, 1.3cqi, 2.2rem)",
                 letterSpacing: "0.1rem",
                 border: "none",
-                boxShadow: "0 0 1.5rem 1rem rgba(239, 144, 17, 0.2)",
+                boxShadow: "0 0 1.5rem 0.1rem rgba(74, 189, 255, 0.4)",
                 backgroundColor: "#49798C",
               }}
               onClick={editingEvent ? handleUpdateEvent : handleAddEvent} // Conditional logic to either update or add event
@@ -549,7 +550,7 @@ const handleEditEvent = (event) => {
                   sx={{
                     fontSize: "clamp(1rem, 0.2cqi, 0.5rem)",
                     lineHeight: "2rem",
-                    width: "400px",
+                    width: "500px",
                     padding: "0 3rem 0 1rem",
                     overflowWrap: "break-word",
                   }}

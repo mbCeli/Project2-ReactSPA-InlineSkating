@@ -15,7 +15,7 @@ export default function HomePage() {
         flexDirection: "row",
         width: "90vw",
         height: "90vh",
-        marginTop: "9.2vh",
+        marginTop: "8vh",
       }}
     >
       <Stack

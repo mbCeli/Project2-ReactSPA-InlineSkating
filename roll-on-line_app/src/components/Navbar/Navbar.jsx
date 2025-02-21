@@ -64,6 +64,7 @@ export default function ClippedDrawer() {
             backgroundColor: "#49798C",
           },
         }}
+        elevation={0}
       >
         <Toolbar disableGutters sx={{ width: 165 }}>
           <List
@@ -122,7 +123,7 @@ export default function ClippedDrawer() {
                 </ListItemButton>
               </Link>
             </ListItem>
-            <ListItem sx={{ width: 165, marginTop: "25rem" }}>
+            <ListItem sx={{ width: 165, marginTop: "23rem" }}>
               <ListItemButton sx={{ width: 165 }}>
                 <ListItemIcon>
                   <ListItemAvatar>

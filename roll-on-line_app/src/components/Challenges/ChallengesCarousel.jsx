@@ -37,7 +37,7 @@ export default function ChallengesCarousel() {
       spacing={10}
       sx={{
         marginRight: "1vw",
-        marginTop: "1vh",
+        marginTop: "-1vh",
         width: "49vw",
         height: "88vh",
         display: "flex",

@@ -72,9 +72,9 @@ export default function ProfileDashboard() {
       sx={{
         marginLeft: "1vw",
         marginRight: "2vw",
-        marginTop: "5vh",
+        marginTop: "2vh",
         width: "35vw",
-        height: "80vh",
+        height: "85vh",
         backgroundImage: `url(${cover})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -91,7 +91,6 @@ export default function ProfileDashboard() {
           marginTop: "3vh",
           justifyContent: "center",
           textAlign: "center",
-          color: "#254159",
         }}
       >
         <Grid2 size={12} m={1} sx={{ textAlign: "center" }}>
@@ -172,7 +171,7 @@ export default function ProfileDashboard() {
           >
             My Equipment
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12,  }}>
             <span style={{ fontWeight: "bold" }}>Skates </span>
             <br />
             {equipment?.skates?.name}
