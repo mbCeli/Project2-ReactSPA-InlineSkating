@@ -1,9 +1,9 @@
 import { Box, Link, Stack, Typography } from "@mui/material";
 
-import linkedInLogo from "../assets/images/LI-Logo.png";
-import gitHubLogo from "../assets/images/github-mark.png";
+import linkedInLogo from "../../../public/assets/images/LI-Logo.png";
+import gitHubLogo from "../../../public/assets/images/github-mark.png";
 
-import gifURL from "../assets/images/pretty-cute.gif";
+import gifURL from "../../../public/assets/images/pretty-cute.gif";
 
 export default function AboutPage() {
   return (

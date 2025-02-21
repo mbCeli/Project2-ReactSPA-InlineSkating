@@ -19,7 +19,7 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 
 import { Link as RouterLink } from "react-router-dom";
 
-import RollOnLineIcon from "../../assets/images/reshot-icon-roller-skate-2S9UAGYNPW.svg";
+import RollOnLineIcon from "../../../public/assets/images/reshot-icon-roller-skate-2S9UAGYNPW.svg";
 
 
 export default function ClippedDrawer() {
