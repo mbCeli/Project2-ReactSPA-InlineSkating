@@ -66,15 +66,14 @@ export default function ProfileDashboard() {
 
   return (
     <Box
-    className="profile-dashboard"
       aria-label="left-side"
       borderRadius={15}
       sx={{
         marginLeft: "1vw",
         marginRight: "2vw",
         marginTop: "2vh",
-        width: "35vw",
-        height: "85vh",
+        width: "45%",
+        height: "85%",
         backgroundImage: `url(${cover})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -171,7 +170,7 @@ export default function ProfileDashboard() {
           >
             My Equipment
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12,  }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
             <span style={{ fontWeight: "bold" }}>Skates </span>
             <br />
             {equipment?.skates?.name}
@@ -181,20 +180,21 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.skates?.image}
               alt="skates pictures"
-              className="skates-image"
+              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
             />
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
-            <span style={{ fontWeight: "bold" }}>Helmet </span>
+            <span style={{ fontWeight: "bold" }}>
+              {equipment?.helmet?.name}{" "}
+            </span>
             <br />
-            {equipment?.helmet?.name}
             <br />
             Model - {equipment?.helmet?.model}
             <br />
             <img
               src={equipment?.helmet?.image}
               alt="helmet pictures"
-              className="helmet-image"
+              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
             />
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
@@ -207,7 +207,7 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.knee_pads?.image}
               alt="knee_pads pictures"
-              className="knee-pads-image"
+              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
             />
           </Grid2>
           <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
@@ -220,7 +220,7 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.wrist_protectors?.image}
               alt="wrist_protectors pictures"
-              className="wrist-guards-image"
+              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
             />
           </Grid2>
         </Grid2>
