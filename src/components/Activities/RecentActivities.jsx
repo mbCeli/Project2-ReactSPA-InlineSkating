@@ -241,8 +241,8 @@ export default function RecentActivities() {
         {/* Recent Activity Table */}
         <TableContainer
           sx={{
-            maxWidth: "100%",
-            maxHeight: "100%",
+            width: "95%",
+            height: "90%",
             overflowX: "hidden",
           }}
         >
