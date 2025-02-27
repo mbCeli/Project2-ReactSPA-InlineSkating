@@ -80,6 +80,10 @@ export default function ProfileDashboard() {
         boxShadow:
           "0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
         overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+
       }}
     >
       {/* Personal Info */}
@@ -238,7 +242,7 @@ export default function ProfileDashboard() {
         container
         size={12}
         spacing={0.5}
-        m={1}
+        m={2}
         sx={{ textAlign: "center", justifyContent: "center", color: "#254159", height: "25%" }}
       >
         <Grid2
