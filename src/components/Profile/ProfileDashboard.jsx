@@ -79,6 +79,7 @@ export default function ProfileDashboard() {
         backgroundSize: "cover",
         boxShadow:
           "0 4px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+        overflow: "hidden",
       }}
     >
       {/* Personal Info */}
@@ -90,13 +91,14 @@ export default function ProfileDashboard() {
           marginTop: "3vh",
           justifyContent: "center",
           textAlign: "center",
+          height: "100%",
         }}
       >
         <Grid2 size={12} m={1} sx={{ textAlign: "center" }}>
           <img
             src={profile.image}
             alt="user picture"
-            className="profile-image"
+            style={{ width: "80px", height: "80px", borderRadius: "50%" }}
           />
         </Grid2>
         <Grid2
@@ -108,6 +110,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
+            fontSize: "1rem",
           }}
         >
           {profile.name}
@@ -120,6 +123,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
+            fontSize: "0.9rem",
           }}
         >
           {profile.age}
@@ -132,6 +136,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
+            fontSize: "0.9rem",
           }}
         >
           {profile.location}
@@ -144,6 +149,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
+            fontSize: "0.9rem",
           }}
         >
           {profile.skating_since}
@@ -155,7 +161,7 @@ export default function ProfileDashboard() {
           size={12}
           spacing={0.5}
           m={1}
-          sx={{ textAlign: "center", justifyContent: "center" }}
+          sx={{ textAlign: "center", justifyContent: "center", height: "100%" }}
         >
           <Grid2
             size={12}
@@ -166,11 +172,12 @@ export default function ProfileDashboard() {
               backgroundColor: "#D9C8B4",
               opacity: 0.7,
               borderRadius: "12px",
+              fontSize: "1rem",
             }}
           >
             My Equipment
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
             <span style={{ fontWeight: "bold" }}>Skates </span>
             <br />
             {equipment?.skates?.name}
@@ -180,10 +187,10 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.skates?.image}
               alt="skates pictures"
-              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
             <span style={{ fontWeight: "bold" }}>
               {equipment?.helmet?.name}{" "}
             </span>
@@ -194,10 +201,10 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.helmet?.image}
               alt="helmet pictures"
-              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
             <span style={{ fontWeight: "bold" }}>Knee Pads</span>
             <br />
             {equipment?.knee_pads?.name}
@@ -207,10 +214,10 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.knee_pads?.image}
               alt="knee_pads pictures"
-              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
             <span style={{ fontWeight: "bold" }}>Wrist Guards</span>
             <br />
             {equipment?.wrist_protectors?.name}
@@ -220,7 +227,7 @@ export default function ProfileDashboard() {
             <img
               src={equipment?.wrist_protectors?.image}
               alt="wrist_protectors pictures"
-              style={{ width: "90px", height: "90px", borderRadius: "50%" }}
+              style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
         </Grid2>
@@ -247,7 +254,7 @@ export default function ProfileDashboard() {
         >
           So Far
         </Grid2>
-        <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
           <span style={{ fontWeight: "bold" }}>Weekly</span>
           <br />
           Distance - {stats.weekly_distance} m
@@ -258,7 +265,7 @@ export default function ProfileDashboard() {
           <br />
           Calories - {stats.weekly_calories}
         </Grid2>
-        <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
           <span style={{ fontWeight: "bold" }}>Monthly</span>
           <br />
           Distance - {stats.monthly_distance} m
@@ -269,7 +276,7 @@ export default function ProfileDashboard() {
           <br />
           Calories - {stats.monthly_calories}
         </Grid2>
-        <Grid2 size={3} sx={{ textAlign: "center", fontSize: 12 }}>
+        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
           <span style={{ fontWeight: "bold" }}>Yearly Goals</span>
           <br />
           Distance - {goals.yearly_distance_goal} m
