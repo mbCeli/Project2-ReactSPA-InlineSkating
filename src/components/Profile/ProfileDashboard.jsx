@@ -110,7 +110,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
-            fontSize: "1rem",
+            fontSize: "0.7rem",
           }}
         >
           {profile.name}
@@ -123,7 +123,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
-            fontSize: "0.9rem",
+            fontSize: "0.7rem",
           }}
         >
           {profile.age}
@@ -136,7 +136,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
-            fontSize: "0.9rem",
+            fontSize: "0.7rem",
           }}
         >
           {profile.location}
@@ -149,7 +149,7 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
-            fontSize: "0.9rem",
+            fontSize: "0.7rem",
           }}
         >
           {profile.skating_since}
@@ -177,7 +177,7 @@ export default function ProfileDashboard() {
           >
             My Equipment
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
             <span style={{ fontWeight: "bold" }}>Skates </span>
             <br />
             {equipment?.skates?.name}
@@ -190,7 +190,7 @@ export default function ProfileDashboard() {
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
             <span style={{ fontWeight: "bold" }}>
               {equipment?.helmet?.name}{" "}
             </span>
@@ -204,7 +204,7 @@ export default function ProfileDashboard() {
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
             <span style={{ fontWeight: "bold" }}>Knee Pads</span>
             <br />
             {equipment?.knee_pads?.name}
@@ -217,7 +217,7 @@ export default function ProfileDashboard() {
               style={{ width: "50px", height: "50px", borderRadius: "50%" }}
             />
           </Grid2>
-          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+          <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
             <span style={{ fontWeight: "bold" }}>Wrist Guards</span>
             <br />
             {equipment?.wrist_protectors?.name}
@@ -250,11 +250,12 @@ export default function ProfileDashboard() {
             backgroundColor: "#D9C8B4",
             opacity: 0.7,
             borderRadius: "12px",
+            fontSize: "1rem",
           }}
         >
           So Far
         </Grid2>
-        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
           <span style={{ fontWeight: "bold" }}>Weekly</span>
           <br />
           Distance - {stats.weekly_distance} m
@@ -265,7 +266,7 @@ export default function ProfileDashboard() {
           <br />
           Calories - {stats.weekly_calories}
         </Grid2>
-        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
           <span style={{ fontWeight: "bold" }}>Monthly</span>
           <br />
           Distance - {stats.monthly_distance} m
@@ -276,7 +277,7 @@ export default function ProfileDashboard() {
           <br />
           Calories - {stats.monthly_calories}
         </Grid2>
-        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.9rem" }}>
+        <Grid2 size={3} sx={{ textAlign: "center", fontSize: "0.7rem" }}>
           <span style={{ fontWeight: "bold" }}>Yearly Goals</span>
           <br />
           Distance - {goals.yearly_distance_goal} m
