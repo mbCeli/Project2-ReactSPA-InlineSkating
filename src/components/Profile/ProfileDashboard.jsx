@@ -91,7 +91,7 @@ export default function ProfileDashboard() {
           marginTop: "3vh",
           justifyContent: "center",
           textAlign: "center",
-          height: "100%",
+          height: "25%",
         }}
       >
         <Grid2 size={12} m={1} sx={{ textAlign: "center" }}>
@@ -161,7 +161,7 @@ export default function ProfileDashboard() {
           size={12}
           spacing={0.5}
           m={1}
-          sx={{ textAlign: "center", justifyContent: "center" }}
+          sx={{ textAlign: "center", justifyContent: "center", height: "50%" }} 
         >
           <Grid2
             size={12}
@@ -239,7 +239,7 @@ export default function ProfileDashboard() {
         size={12}
         spacing={0.5}
         m={1}
-        sx={{ textAlign: "center", justifyContent: "center", color: "#254159" }}
+        sx={{ textAlign: "center", justifyContent: "center", color: "#254159", height: "25%" }}
       >
         <Grid2
           size={12}
