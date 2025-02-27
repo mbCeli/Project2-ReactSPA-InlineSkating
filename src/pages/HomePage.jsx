@@ -13,8 +13,8 @@ export default function HomePage() {
       sx={{
         display: "flex",
         flexDirection: "row",
-        width: "100%",
-        height: "90%",
+        width: "90vw",
+        height: "90vh",
         marginTop: "8vh",
       }}
     >
