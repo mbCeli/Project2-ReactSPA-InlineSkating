@@ -98,7 +98,7 @@ export default function ProfileDashboard() {
           <img
             src={profile.image}
             alt="user picture"
-            style={{ width: "80px", height: "80px", borderRadius: "50%" }}
+            style={{ width: "70px", height: "70px", borderRadius: "50%" }}
           />
         </Grid2>
         <Grid2
