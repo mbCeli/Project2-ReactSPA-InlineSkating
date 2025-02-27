@@ -199,7 +199,7 @@ export default function RecentActivities() {
         sx={{
           alignSelf: "flex-start",
           fontWeight: "bold",
-          fontSize: "1.5rem",
+          fontSize: "1rem",
           maxWidth: "40vw",
           height: "0px",
           color: "#FEF9F3",
@@ -229,7 +229,7 @@ export default function RecentActivities() {
             sx={{
               backgroundColor: "#8C4830",
               color: "#FECC97",
-              fontSize: "1rem",
+              fontSize: "0.8rem",
             }}
           >
             <SvgIcon>
@@ -258,44 +258,44 @@ export default function RecentActivities() {
                   <TableSortLabel
                     active={orderBy === "date"}
                     direction={orderBy === "date" ? order : "asc"}
-                    sx={{ color: "#FECC97", fontSize: "1rem" }}
+                    sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                   >
                     Date
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "1rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                 >
                   Place / Route
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "1rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                 >
                   Duration
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "1rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                 >
                   Distance
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "1rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                 >
                   Calories
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "1rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                 >
                   Comments
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "1rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
                 >
                   Edit / Delete
                 </TableCell>
@@ -400,7 +400,7 @@ export default function RecentActivities() {
           </Table>
         </TableContainer>
         <TablePagination
-          sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+          sx={{ color: "#FECC97", fontSize: "0.5rem" }}
           rowsPerPageOptions={[2, 4, 8]}
           component="div"
           count={sortedActivities.length}
