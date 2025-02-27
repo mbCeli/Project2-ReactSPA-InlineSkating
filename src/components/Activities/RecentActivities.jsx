@@ -195,21 +195,6 @@ export default function RecentActivities() {
 
   return (
     <Stack sx={{ marginTop: "-1vh" }}>
-      <Typography
-        sx={{
-          alignSelf: "flex-start",
-          fontWeight: "bold",
-          fontSize: "1rem",
-          maxWidth: "40vw",
-          height: "0px",
-          color: "#FEF9F3",
-          zIndex: 1,
-          marginLeft: "2.5vw",
-        }}
-      >
-        Recent Activity
-      </Typography>
-
       <Stack
         borderRadius={15}
         sx={{
@@ -221,7 +206,24 @@ export default function RecentActivities() {
         }}
       >
         {/* Add new activity */}
-        <Stack sx={{ width: "20%", alignSelf: "flex-end", marginRight: "2.5%" }}>
+        <Stack sx={{ width: "auto", 
+        marginRight: "2%", 
+        display: "flex", 
+        flexDirection: "row", 
+          justifyContent: "space-between" }}>
+          <Typography
+            sx={{
+              alignSelf: "flex-start",
+              fontWeight: "bold",
+              fontSize: "1rem",
+              maxWidth: "40vw",
+              height: "0px",
+              color: "#FEF9F3",
+              marginLeft: "2.5vw",
+            }}
+          >
+            Recent Activity
+          </Typography>
           <Button
             onClick={() => handleOpenModal(false)}
             variant="contained"
@@ -232,10 +234,7 @@ export default function RecentActivities() {
               fontSize: "0.8rem",
             }}
           >
-            <SvgIcon>
-              <AddIcon fontSize="small" />
-            </SvgIcon>
-            Add new
+            <AddIcon fontSize="small" />
           </Button>
         </Stack>
 
