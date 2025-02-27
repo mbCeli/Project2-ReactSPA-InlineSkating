@@ -213,7 +213,7 @@ export default function RecentActivities() {
       <Stack
         borderRadius={15}
         sx={{
-          width: "45vw",
+          width: "47vw",
           height: "42vh",
           backgroundColor: "#254159",
           margin: 0,
@@ -221,7 +221,7 @@ export default function RecentActivities() {
         }}
       >
         {/* Add new activity */}
-        <Stack sx={{ width: "17%", alignSelf: "flex-end", marginRight: "2%" }}>
+        <Stack sx={{ width: "20%", alignSelf: "flex-end", marginRight: "2.5%" }}>
           <Button
             onClick={() => handleOpenModal(false)}
             variant="contained"
@@ -400,7 +400,7 @@ export default function RecentActivities() {
           </Table>
         </TableContainer>
         <TablePagination
-          sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+          sx={{ color: "#FECC97", fontSize: "0.7rem" }}
           rowsPerPageOptions={[2, 4, 8]}
           component="div"
           count={sortedActivities.length}
