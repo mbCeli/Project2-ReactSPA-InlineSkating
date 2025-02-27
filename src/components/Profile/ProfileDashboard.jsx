@@ -161,7 +161,7 @@ export default function ProfileDashboard() {
           size={12}
           spacing={0.5}
           m={1}
-          sx={{ textAlign: "center", justifyContent: "center", height: "100%" }}
+          sx={{ textAlign: "center", justifyContent: "center" }}
         >
           <Grid2
             size={12}
