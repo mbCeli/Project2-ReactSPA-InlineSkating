@@ -1,7 +1,7 @@
 Technologies and libraries used:
-  - React ![pngwing com](https://github.com/user-attachments/assets/e9078ca8-c393-4512-8787-47a7ab0d6027)
-  - Nodejs ![pngwing com (1)](https://github.com/user-attachments/assets/190794f6-e3fe-4b36-bb20-75a2415be69b)
-  - Material UI ![pngwing com (3)](https://github.com/user-attachments/assets/ddf572e5-b655-41fc-84a6-236ef00a94e6)
+  - React   ![pngwing com (6)](https://github.com/user-attachments/assets/7d328e6a-2682-4626-926b-02e2f7837869)
+  - Nodejs   ![pngwing com (5)](https://github.com/user-attachments/assets/5860724d-e35b-4ffa-9d86-5c5708a3bc95)
+  - Material UI   ![pngwing com (4)](https://github.com/user-attachments/assets/b5de9e38-9cf3-408a-84f2-11777ca6c91b)
 
 Web app to track your skating sessions, join challenges and paticipating in events :)
   - Access to the web page: https://rollonline.netlify.app/ 
