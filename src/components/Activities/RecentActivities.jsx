@@ -241,9 +241,10 @@ export default function RecentActivities() {
         {/* Recent Activity Table */}
         <TableContainer
           sx={{
-            width: "95%",
+            width: "95z%",
             height: "90%",
             overflowX: "hidden",
+            paddingLeft: "50px"
           }}
         >
           <Table>
@@ -257,44 +258,44 @@ export default function RecentActivities() {
                   <TableSortLabel
                     active={orderBy === "date"}
                     direction={orderBy === "date" ? order : "asc"}
-                    sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                    sx={{ color: "#FECC97", fontSize: "0.6rem" }}
                   >
                     Date
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
                 >
                   Place / Route
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
                 >
                   Duration
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
                 >
                   Distance
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
                 >
                   Calories
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
                 >
                   Comments
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.8rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
                 >
                   Edit / Delete
                 </TableCell>
