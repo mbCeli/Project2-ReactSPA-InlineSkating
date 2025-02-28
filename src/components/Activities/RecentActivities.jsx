@@ -277,19 +277,19 @@ export default function RecentActivities() {
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0 10px", }}
                 >
                   Distance
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0 10px", }}
                 >
                   Calories
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0 10px", }}
                 >
                   Comments
                 </TableCell>
