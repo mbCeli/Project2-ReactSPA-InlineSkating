@@ -210,7 +210,8 @@ export default function RecentActivities() {
         marginRight: "2%", 
         display: "flex", 
         flexDirection: "row", 
-          justifyContent: "space-between" }}>
+        justifyContent: "space-between",
+        padding: "10px 0" }}>
           <Typography
             sx={{
               alignSelf: "flex-start",
