@@ -265,37 +265,37 @@ export default function RecentActivities() {
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
                 >
                   Place / Route
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0",}}
                 >
                   Duration
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
                 >
                   Distance
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
                 >
                   Calories
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
                 >
                   Comments
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
                 >
                   Edit / Delete
                 </TableCell>
