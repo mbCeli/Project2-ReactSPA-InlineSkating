@@ -202,6 +202,7 @@ export default function RecentActivities() {
           height: "42vh",
           backgroundColor: "#254159",
           margin: 0,
+          paddingTop: "2vh",
         }}
       >
         {/* Add new activity */}
@@ -231,10 +232,11 @@ export default function RecentActivities() {
             sx={{
               backgroundColor: "#8C4830",
               color: "#FECC97",
-              fontSize: "0.8rem",
+              fontSize: "0.6rem",
             }}
           >
             <AddIcon fontSize="small" />
+            Add new
           </Button>
         </Stack>
 
