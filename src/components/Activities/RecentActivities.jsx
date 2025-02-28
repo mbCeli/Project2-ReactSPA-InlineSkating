@@ -202,7 +202,6 @@ export default function RecentActivities() {
           height: "42vh",
           backgroundColor: "#254159",
           margin: 0,
-          paddingTop: "4vh",
         }}
       >
         {/* Add new activity */}
@@ -211,7 +210,7 @@ export default function RecentActivities() {
         display: "flex", 
         flexDirection: "row", 
         justifyContent: "space-between",
-        padding: "10px 0" }}>
+         }}>
           <Typography
             sx={{
               alignSelf: "flex-start",
@@ -401,7 +400,7 @@ export default function RecentActivities() {
           </Table>
         </TableContainer>
         <TablePagination
-          sx={{ color: "#FECC97", fontSize: "0.7rem" }}
+          sx={{ color: "#FECC97"}}
           rowsPerPageOptions={[2, 4, 8]}
           component="div"
           count={sortedActivities.length}
