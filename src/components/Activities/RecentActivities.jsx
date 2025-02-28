@@ -289,7 +289,7 @@ export default function RecentActivities() {
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0 10px", }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem", padding: "0", }}
                 >
                   Comments
                 </TableCell>
