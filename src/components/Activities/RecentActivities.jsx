@@ -244,7 +244,7 @@ export default function RecentActivities() {
             width: "95z%",
             height: "90%",
             overflowX: "hidden",
-            paddingLeft: "50px"
+            paddingRight: "50px"
           }}
         >
           <Table>
@@ -258,44 +258,44 @@ export default function RecentActivities() {
                   <TableSortLabel
                     active={orderBy === "date"}
                     direction={orderBy === "date" ? order : "asc"}
-                    sx={{ color: "#FECC97", fontSize: "0.6rem" }}
+                    sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                   >
                     Date
                   </TableSortLabel>
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                 >
                   Place / Route
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                 >
                   Duration
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                 >
                   Distance
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                 >
                   Calories
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                 >
                   Comments
                 </TableCell>
                 <TableCell
                   align="center"
-                  sx={{ color: "#FECC97", fontSize: "0.5rem" }}
+                  sx={{ color: "#FECC97", fontSize: "0.7rem" }}
                 >
                   Edit / Delete
                 </TableCell>
@@ -309,7 +309,7 @@ export default function RecentActivities() {
                     sx={{
                       maxWidth: "70px",
                       color: "#FEF9F3",
-                      fontSize: "0.7rem",
+                      fontSize: "0.6rem",
                     }}
                   >
                     {activity.date}
@@ -319,7 +319,7 @@ export default function RecentActivities() {
                     sx={{
                       maxWidth: "70px",
                       color: "#FEF9F3",
-                      fontSize: "0.7rem",
+                      fontSize: "0.6rem",
                     }}
                   >
                     {activity.route_name}
@@ -329,7 +329,7 @@ export default function RecentActivities() {
                     sx={{
                       maxWidth: "20px",
                       color: "#FEF9F3",
-                      fontSize: "0.7rem",
+                      fontSize: "0.6rem",
                     }}
                   >
                     {activity.time} min
@@ -339,7 +339,7 @@ export default function RecentActivities() {
                     sx={{
                       maxWidth: "20px",
                       color: "#FEF9F3",
-                      fontSize: "0.7rem",
+                      fontSize: "0.6rem",
                     }}
                   >
                     {activity.distance} km
@@ -349,7 +349,7 @@ export default function RecentActivities() {
                     sx={{
                       maxWidth: "20px",
                       color: "#FEF9F3",
-                      fontSize: "0.7rem",
+                      fontSize: "0.6rem",
                     }}
                   >
                     {activity.calories_burned}
@@ -359,7 +359,7 @@ export default function RecentActivities() {
                     sx={{
                       maxWidth: "500px",
                       color: "#FEF9F3",
-                      fontSize: "0.7rem",
+                      fontSize: "0.6rem",
                     }}
                   >
                     {activity.comments}
@@ -373,7 +373,7 @@ export default function RecentActivities() {
                         backgroundColor: "#8C4830",
                         color: "#FECC97",
                         marginBottom: "0.1rem",
-                        fontSize: "0.7rem",
+                        fontSize: "0.6rem",
                       }}
                     >
                       Edit...
@@ -387,7 +387,7 @@ export default function RecentActivities() {
                       sx={{
                         backgroundColor: "red",
                         color: "#FECC97",
-                        fontSize: "0.7rem",
+                        fontSize: "0.6rem",
                       }}
                     >
                       Delete
